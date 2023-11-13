@@ -1,7 +1,7 @@
 package fb.model;
 
 public class Colaborador {
-    private Integer id;
+    private String id;
     private String nombres;
     private String ape_paterno;
     private String ape_materno;
@@ -9,7 +9,7 @@ public class Colaborador {
     private String telefono;
     private String estado;
 
-    public Colaborador(Integer id, String nombres, String ape_paterno, String ape_materno, String direccion, String telefono, String estado) {
+    public Colaborador(String id, String nombres, String ape_paterno, String ape_materno, String direccion, String telefono, String estado) {
         this.id = id;
         this.nombres = nombres;
         this.ape_paterno = ape_paterno;
@@ -27,11 +27,11 @@ public class Colaborador {
         this.estado = estado;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
