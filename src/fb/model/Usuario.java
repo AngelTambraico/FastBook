@@ -1,61 +1,67 @@
 package fb.model;
 
 public class Usuario {
-	private Integer id;
-	private String user;
-	private String userType;
-	private String password;
-	private String displayName;
-	private int estado;
 
-	public Usuario() {
-	}
+    private String id;
+    private String idColaborador;
+    private String userName;
+    private String password;
+    private String tipo;
+    private String estado;
 
-	public Integer getId() {
-		return id;
-	}
+    public Usuario(String idColaborador, String userName, String password, String tipo, String estado) {        
+        this.idColaborador = idColaborador;
+        this.userName = userName;
+        this.password = password;
+        this.tipo = tipo;
+        this.estado = estado;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public String getEstado() {
+        return estado;
+    }
 
-	public String getUser() {
-		return user;
-	}
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
-	public void setUser(String user) {
-		this.user = user;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getUserType() {
-		return userType;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
+    public String getIdColaborador() {
+        return idColaborador;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setIdColaborador(String idColaborador) {
+        this.idColaborador = idColaborador;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public String getDisplayName() {
-		return displayName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public int getEstado() {
-		return estado;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setEstado(int estado) {
-		this.estado = estado;
-	}
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 }
