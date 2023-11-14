@@ -103,7 +103,8 @@ public class Principal extends javax.swing.JFrame {
             MantenimientoColaborador man = new MantenimientoColaborador();
             dpContenedor.add(man);
             man.setVisible(true);
-            man.setMaximum(true);
+            man.setMaximum(false);
+            man.setLocation((dpContenedor.getSize().width - man.getSize().width)/2, (dpContenedor.getSize().height - man.getSize().height)/2);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
