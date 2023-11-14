@@ -25,15 +25,49 @@ public class ColaboradorDaoMemory implements EntidadService<Colaborador> {
         lista = new Colaborador[Constantes.CANTIDAD_MEMO];
         indice = -1;
 
-        Colaborador t = new Colaborador(
+        // <editor-fold defaultstate="collapsed" desc="Data de prueba">
+        Colaborador t1 = new Colaborador(
                 "Ángel",
                 "Tambraico",
                 "Mauricio",
                 "Av. Universitaria 123",
-                "941686406",
-                "ACTIVO"
+                "941686406"
         );
-        create(t);
+        Colaborador t2 = new Colaborador(
+                "Alvaro",
+                "Escudero",
+                "Príncipe",
+                "Av. Universitaria 456",
+                "941686789"
+        );
+        Colaborador t3 = new Colaborador(
+                "Airton",
+                "Collachaua",
+                "Poma",
+                "Av. Universitaria 456",
+                "941686178"
+        );
+        Colaborador t4 = new Colaborador(
+                "Juan",
+                "Flores",
+                "Moreno",
+                "Av. Universitaria 295",
+                "941686307"
+        );
+        Colaborador t5 = new Colaborador(
+                "Franco Antonio",
+                "Matos",
+                "Ramos",
+                "Av. Universitaria 2184",
+                "941686128"
+        );
+        create(t1);
+        create(t2);
+        create(t3);
+        create(t4);
+        create(t5);
+        
+        // </editor-fold>
     }
 
     public static ColaboradorDaoMemory getInstancia() {
@@ -49,7 +83,7 @@ public class ColaboradorDaoMemory implements EntidadService<Colaborador> {
         String id;
         if (t instanceof Colaborador) {
             indice++;
-            id = "CO" + String.valueOf(indice + 10000).substring(1);
+            id = "CO" + String.valueOf(indice + 10001).substring(1);
             t.setId(id);
             lista[indice] = t;
             result = true;
