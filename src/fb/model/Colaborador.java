@@ -9,8 +9,7 @@ public class Colaborador {
     private String telefono;
     private String estado;
 
-    public Colaborador(String id, String nombres, String ape_paterno, String ape_materno, String direccion, String telefono, String estado) {
-        this.id = id;
+    public Colaborador(String nombres, String ape_paterno, String ape_materno, String direccion, String telefono, String estado) {        
         this.nombres = nombres;
         this.ape_paterno = ape_paterno;
         this.ape_materno = ape_materno;
