@@ -22,13 +22,12 @@ public class ClienteDaoMemory implements ClienteService {
         lista = new Cliente[Constantes.CANTIDAD_MEMO];
         indice = -1;
 
-        // Datos de prueba
         Cliente clientePrueba = new Cliente(
                 "John",
-                "Doe",
-                "Smith",
-                "123 Main St",
-                "555-1234",
+                "Casas",
+                "Perez",
+                "123 Av Peru",
+                "123456789",
                 "ACTIVO"
         );
         create(clientePrueba);
@@ -118,12 +117,8 @@ public class ClienteDaoMemory implements ClienteService {
     }
 
     @Override
-    public Cliente login(String user, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public Cliente[] findByName(String name) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 }

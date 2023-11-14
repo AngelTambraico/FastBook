@@ -7,7 +7,5 @@ package fb.service;
 import fb.model.Cliente;
 
 public interface ClienteService extends EntidadService<Cliente> {
-    // Puedes agregar métodos específicos para operaciones relacionadas con Cliente si es necesario
-    public Cliente login(String user, String password);
+    public Cliente[] findByNombre(String nombre);
 }
-
