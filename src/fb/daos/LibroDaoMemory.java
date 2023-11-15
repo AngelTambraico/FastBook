@@ -24,8 +24,8 @@ public class LibroDaoMemory implements LibroService{
         indice = -1;
 
         // Datos de prueba
-        Libro libro1 = new Libro( "J.R.R. Tolkien", "El señor de los anillos", 29.99, 30, "En oferta");
-        create(libro1);
+        //Libro libro1 = new Libro( "J.R.R. Tolkien", "El señor de los anillos", 29.99, 30, "En oferta");
+        //create(libro1);
     }
 
     public static LibroDaoMemory getInstancia() {
@@ -35,7 +35,6 @@ public class LibroDaoMemory implements LibroService{
         return instancia;
     }
 
-    @Override
     public boolean create(Libro libro) {
         boolean result = false;
         String id;
@@ -49,13 +48,10 @@ public class LibroDaoMemory implements LibroService{
         return result;
     }
 
-    @Override
     public boolean delete(String id) {
         boolean result = false;
         for (int i = 0; i < getCantidad(); i++) {
             if (lista[i].getId().equals(id)) {
-                // Podrías cambiar el estado del libro a "INACTIVO" si es necesario
-                // lista[i].setEstado("INACTIVO");
                 result = true;
                 break;
             }
@@ -63,7 +59,6 @@ public class LibroDaoMemory implements LibroService{
         return result;
     }
 
-    @Override
     public boolean update(Libro libro) {
         boolean result = false;
         for (int i = 0; i < getCantidad(); i++) {
@@ -76,7 +71,6 @@ public class LibroDaoMemory implements LibroService{
         return result;
     }
 
-    @Override
     public Libro findById(String id) {
         Libro result = null;
         for (int i = 0; i < getCantidad(); i++) {
@@ -88,7 +82,6 @@ public class LibroDaoMemory implements LibroService{
         return result;
     }
 
-    @Override
     public Libro[] findAll() {
         List<Libro> result = new ArrayList<>();
         for (int i = 0; i < getCantidad(); i++) {
@@ -97,7 +90,6 @@ public class LibroDaoMemory implements LibroService{
         return result.toArray(new Libro[0]);
     }
 
-    @Override
     public Libro[] findByTitle(String title) {
         List<Libro> result = new ArrayList<>();
         for (int i = 0; i < getCantidad(); i++) {
@@ -108,7 +100,6 @@ public class LibroDaoMemory implements LibroService{
         return result.toArray(new Libro[0]);
     }
 
-    @Override
     public int getCantidad() {
         return indice + 1;
     }
