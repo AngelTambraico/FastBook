@@ -5,13 +5,15 @@
 package fb.daos;
 
 import fb.model.Cliente;
-import fb.service.ClienteService;
+import fb.model.Colaborador;
+import fb.service.EntidadService;
+import fb.service.EntidadService;
 import fb.util.Constantes;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClienteDaoMemory implements ClienteService {
+public class ClienteDaoMemory implements EntidadService<Cliente> {
 
     private Cliente[] lista;
     private int indice;
@@ -101,7 +103,7 @@ public class ClienteDaoMemory implements ClienteService {
         return result.toArray(new Cliente[0]);
     }
 
-    public Cliente[] findByNombre(String nombre) {
+    public Cliente[] findByName(String nombre) {
         List<Cliente> result = new ArrayList<>();
         for (int i = 0; i < getCantidad(); i++) {
             if (lista[i].getNombre().contains(nombre)) {
@@ -116,9 +118,6 @@ public class ClienteDaoMemory implements ClienteService {
         return indice + 1;
     }
 
-    @Override
-    public Cliente[] findByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   
 
 }
