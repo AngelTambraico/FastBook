@@ -4,10 +4,17 @@
  */
 package fb.daos;
 
+import fb.model.Punto;
+import fb.service.EntidadService;
+
 /**
  *
  * @author USUARIO
  */
 public class PuntoDaoMemory {
+
+    static EntidadService<Punto> getInstancia() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }
