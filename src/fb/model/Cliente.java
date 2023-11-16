@@ -1,7 +1,7 @@
 package fb.model;
 
 public class Cliente {
-    private int id;
+    private String id;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -9,8 +9,7 @@ public class Cliente {
     private String telefono;
     private String estado;
 
-    public Cliente(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String direccion, String telefono, String estado) {
-        this.id = id;
+    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String direccion, String telefono, String estado) {        
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -19,11 +18,11 @@ public class Cliente {
         this.estado = estado;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

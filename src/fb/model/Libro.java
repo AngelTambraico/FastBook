@@ -1,16 +1,14 @@
 package fb.model;
 
 public class Libro {
-    private int id;
+    private String id;
     private Autor autor;
     private String titulo;
     private double precio;
     private int stock;
     private String estado;
-    private String dato;
 
-    public Libro(int id, Autor autor, String titulo, double precio, int stock, String estado) {
-        this.id = id;
+    public Libro(Autor autor, String titulo, double precio, int stock, String estado) {        
         this.autor = autor;
         this.titulo = titulo;
         this.precio = precio;
@@ -18,11 +16,11 @@ public class Libro {
         this.estado = estado;
     }
     
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
