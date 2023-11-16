@@ -4,6 +4,14 @@
  */
 package fb.gui;
 
+import fb.daos.ColaboradorDaoFactory;
+import fb.model.Colaborador;
+import fb.util.Constantes;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author USUARIO
@@ -15,6 +23,32 @@ public class MantenimientoColaborador extends javax.swing.JInternalFrame {
      */
     public MantenimientoColaborador() {
         initComponents();
+        cargarDatos();
+    }
+
+    public void cargarDatos() {
+        var lista = ColaboradorDaoFactory.getFabrica().getColaboradorDao(Constantes.ACTUAL).findAll();
+        DefaultTableModel modelo = (DefaultTableModel) tbColaboradores.getModel();
+
+        modelo.setColumnCount(0);
+        modelo.setRowCount(0);
+        modelo.addColumn("Codigo");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Apellidos");
+        modelo.addColumn("Dirección");
+        modelo.addColumn("Teléfono");
+        modelo.addColumn("Estado");
+
+        for (Colaborador c : lista) {
+            Object[] fila = new Object[6];
+            fila[0] = c.getId();
+            fila[1] = c.getNombres();
+            fila[2] = c.getApePaterno()+" "+c.getApeMaterno();
+            fila[3] = c.getDireccion();
+            fila[4] = c.getTelefono();
+            fila[5] = c.getEstado();
+            modelo.addRow(fila);
+        }
     }
 
     /**
@@ -49,10 +83,25 @@ public class MantenimientoColaborador extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tbColaboradores);
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -61,7 +110,7 @@ public class MantenimientoColaborador extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnAgregar)
@@ -75,7 +124,7 @@ public class MantenimientoColaborador extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -86,6 +135,58 @@ public class MantenimientoColaborador extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        try {
+            FormularioColaborador.codigo="";
+                JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                FormularioColaborador obj = new FormularioColaborador(topFrame, true);
+                obj.setVisible(true);
+                cargarDatos();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        try {
+            int fila = tbColaboradores.getSelectedRow();
+
+            if (fila != -1) {
+                FormularioColaborador.codigo = tbColaboradores.getValueAt(fila, 0).toString();
+                JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                FormularioColaborador obj = new FormularioColaborador(topFrame, true);
+                obj.setVisible(true);
+                cargarDatos();
+            } else {
+                JOptionPane.showMessageDialog(this, "No ha seleccionado ninguna fila");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+            int fila = tbColaboradores.getSelectedRow();
+
+            if (fila != -1) {
+                int dialogResult = JOptionPane.showConfirmDialog (null, "¿Seguro de eliminar?","Aviso",0);
+                if(dialogResult == JOptionPane.YES_OPTION){
+                    if(ColaboradorDaoFactory.getFabrica().getColaboradorDao(Constantes.ACTUAL).delete(tbColaboradores.getValueAt(fila, 0).toString())){
+                        JOptionPane.showMessageDialog(this, "Inactivado correctamente");                        
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Error interno del sistema");                        
+                    }
+                    cargarDatos();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No ha seleccionado ninguna fila");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -21,6 +21,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -52,7 +53,11 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Contraseña");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, -1));
+
+        txtUsuario.setText("admin");
         getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 140, -1));
+
+        txtPassword.setText("admin");
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 140, -1));
 
         btnLogin.setText("Iniciar sesión");
