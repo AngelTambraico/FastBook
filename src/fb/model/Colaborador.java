@@ -1,22 +1,21 @@
 package fb.model;
 
 public class Colaborador {
-    private Integer id;
+    private String id;
     private String nombres;
-    private String ape_paterno;
-    private String ape_materno;
+    private String apePaterno;
+    private String apeMaterno;
     private String direccion;
     private String telefono;
     private String estado;
 
-    public Colaborador(Integer id, String nombres, String ape_paterno, String ape_materno, String direccion, String telefono, String estado) {
-        this.id = id;
+    public Colaborador(String nombres, String apePaterno, String apeMaterno, String direccion, String telefono) {        
         this.nombres = nombres;
-        this.ape_paterno = ape_paterno;
-        this.ape_materno = ape_materno;
+        this.apePaterno = apePaterno;
+        this.apeMaterno = apeMaterno;
         this.direccion = direccion;
         this.telefono = telefono;
-        this.estado = estado;
+        this.estado = "ACTIVO";
     }
 
     public String getEstado() {
@@ -27,11 +26,11 @@ public class Colaborador {
         this.estado = estado;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -43,20 +42,20 @@ public class Colaborador {
         this.nombres = nombres;
     }
 
-    public String getApe_paterno() {
-        return ape_paterno;
+    public String getApePaterno() {
+        return apePaterno;
     }
 
-    public void setApe_paterno(String ape_paterno) {
-        this.ape_paterno = ape_paterno;
+    public void setApePaterno(String apePaterno) {
+        this.apePaterno = apePaterno;
     }
 
-    public String getApe_materno() {
-        return ape_materno;
+    public String getApeMaterno() {
+        return apeMaterno;
     }
 
-    public void setApe_materno(String ape_materno) {
-        this.ape_materno = ape_materno;
+    public void setApeMaterno(String apeMaterno) {
+        this.apeMaterno = apeMaterno;
     }
 
     public String getDireccion() {
