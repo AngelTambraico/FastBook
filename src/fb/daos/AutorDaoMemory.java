@@ -4,10 +4,17 @@
  */
 package fb.daos;
 
+import fb.model.Autor;
+import fb.service.EntidadService;
+
 /**
  *
  * @author USUARIO
  */
 public class AutorDaoMemory {
+
+    static EntidadService<Autor> getInstancia() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }
