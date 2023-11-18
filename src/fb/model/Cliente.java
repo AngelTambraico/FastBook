@@ -15,7 +15,7 @@ public class Cliente {
         this.apellidoMaterno = apellidoMaterno;
         this.direccion = direccion;
         this.telefono = telefono;
-        this.estado = estado;
+        this.estado ="ACTIVO";
     }
 
     public String getId() {
