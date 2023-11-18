@@ -7,9 +7,7 @@ package fb.daos;
 import fb.model.Cliente;
 import fb.model.Colaborador;
 import fb.service.EntidadService;
-import fb.service.EntidadService;
 import fb.util.Constantes;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +27,7 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
                 "Casas",
                 "Perez",
                 "123 Av Peru",
-                "123456789",
-                "ACTIVO"
-        );
+                "123456789");
         create(clientePrueba);
     }
 
