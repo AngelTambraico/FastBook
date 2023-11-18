@@ -35,6 +35,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return instancia;
     }
 
+    @Override
     public boolean create(Libro libro) {
         boolean result = false;
         String id;
@@ -48,6 +49,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return result;
     }
 
+    @Override
     public boolean delete(String id) {
         boolean result = false;
         for (int i = 0; i < getCantidad(); i++) {
@@ -59,6 +61,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return result;
     }
 
+    @Override
     public boolean update(Libro libro) {
         boolean result = false;
         for (int i = 0; i < getCantidad(); i++) {
@@ -71,6 +74,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return result;
     }
 
+    @Override
     public Libro findById(String id) {
         Libro result = null;
         for (int i = 0; i < getCantidad(); i++) {
@@ -82,6 +86,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return result;
     }
 
+    @Override
     public Libro[] findAll() {
         List<Libro> result = new ArrayList<>();
         for (int i = 0; i < getCantidad(); i++) {
@@ -90,7 +95,8 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return result.toArray(new Libro[0]);
     }
 
-    public Libro[] findByTitle(String title) {
+    @Override
+    public Libro[] findByName(String title) {
         List<Libro> result = new ArrayList<>();
         for (int i = 0; i < getCantidad(); i++) {
             if (lista[i].getTitulo().contains(title)) {
@@ -100,12 +106,19 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return result.toArray(new Libro[0]);
     }
 
+    @Override
     public int getCantidad() {
         return indice + 1;
     }
-
-    @Override
-    public Libro[] findByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    /*
+    public Libro[] findByTitle(String title) {
+        List<Libro> result = new ArrayList<>();
+        for (int i = 0; i < getCantidad(); i++) {
+            if (lista[i].getTitulo().contains(title)) {
+                result.add(lista[i]);
+            }
+        }
+        return result.toArray(new Libro[0]);
     }
+    */
 }
