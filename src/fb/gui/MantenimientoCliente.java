@@ -70,7 +70,7 @@ public class MantenimientoCliente extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Colaboradores");
+        setTitle("Clientes");
 
         tbClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
