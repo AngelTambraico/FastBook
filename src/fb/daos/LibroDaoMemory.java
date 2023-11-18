@@ -5,7 +5,7 @@
 package fb.daos;
 
 import fb.model.Libro;
-import fb.service.LibroService;
+import fb.service.EntidadService;
 import fb.util.Constantes;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author USUARIO
  */
-public class LibroDaoMemory implements LibroService{
+public class LibroDaoMemory implements EntidadService<Libro>{
     private Libro[] lista;
     private int indice;
 
@@ -23,7 +23,7 @@ public class LibroDaoMemory implements LibroService{
         lista = new Libro[Constantes.CANTIDAD_MEMO];
         indice = -1;
 
-        // Datos de prueba
+        //Datos de prueba
         //Libro libro1 = new Libro( "J.R.R. Tolkien", "El señor de los anillos", 29.99, 30, "En oferta");
         //create(libro1);
     }
@@ -102,5 +102,10 @@ public class LibroDaoMemory implements LibroService{
 
     public int getCantidad() {
         return indice + 1;
+    }
+
+    @Override
+    public Libro[] findByName(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
