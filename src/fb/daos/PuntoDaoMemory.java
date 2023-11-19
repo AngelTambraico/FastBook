@@ -36,14 +36,14 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
     }
 
     @Override
-    public boolean create(Punto t) {
+    public boolean create(Punto punto) {
         boolean result = false;
         String id;
-        if (t instanceof Punto) {
+        if (punto instanceof Punto) {
             indice++;
             id = "P" + String.valueOf(indice + 10000).substring(1);
-            t.setId(id);
-            lista[indice] = t;
+            punto.setId(id);
+            lista[indice] = punto;
             result = true;
         }
         return result;
@@ -63,11 +63,11 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
     }
 
     @Override
-    public boolean update(Punto t) {
+    public boolean update(Punto punto) {
         boolean result = false;
         for (int i = 0; i < getCantidad(); i++) {
-            if (lista[i].getId().equals(t.getId())) {
-                lista[i] = t;
+            if (lista[i].getId().equals(punto.getId())) {
+                lista[i] = punto;
                 result = true;
                 break;
             }
