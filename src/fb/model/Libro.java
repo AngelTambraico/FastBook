@@ -7,7 +7,6 @@ public class Libro {
     private double precio;
     private int stock;
     private String estado;
-    private String dato;
 
     public Libro(Autor autor, String titulo, double precio, int stock, String estado) {        
         this.autor = autor;
