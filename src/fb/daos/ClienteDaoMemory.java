@@ -134,14 +134,14 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
         public Cliente[] findByName(String nombre) {
     quickSort();
     List<Cliente> result = new ArrayList<>();
-    String nombreMinusculas = nombre.toLowerCase(); // Convertir a minúsculas
+    String nombreMinusculas = nombre.toLowerCase(); 
 
     int left = 0;
     int right = getCantidad() - 1;
 
     while (left <= right) {
         int mid = left + (right - left) / 2;
-        String nombreEnLista = lista[mid].getNombre().toLowerCase(); // Convertir a minúsculas
+        String nombreEnLista = lista[mid].getNombre().toLowerCase(); 
 
         int cmp = nombreEnLista.compareTo(nombreMinusculas);
 
