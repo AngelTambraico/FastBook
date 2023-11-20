@@ -7,8 +7,7 @@ public class Autor {
     private String nacionalidad;
     private String estado;
 
-    public Autor(String id, String nombres, String apellidos, String nacionalidad) {
-        this.id = id;
+    public Autor(String nombres, String apellidos, String nacionalidad) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.nacionalidad = nacionalidad;

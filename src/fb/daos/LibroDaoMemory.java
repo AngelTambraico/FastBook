@@ -110,15 +110,4 @@ public class LibroDaoMemory implements EntidadService<Libro>{
     public int getCantidad() {
         return indice + 1;
     }
-    /*
-    public Libro[] findByTitle(String title) {
-        List<Libro> result = new ArrayList<>();
-        for (int i = 0; i < getCantidad(); i++) {
-            if (lista[i].getTitulo().contains(title)) {
-                result.add(lista[i]);
-            }
-        }
-        return result.toArray(new Libro[0]);
-    }
-    */
 }
