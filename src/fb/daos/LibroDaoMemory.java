@@ -97,17 +97,73 @@ public class LibroDaoMemory implements EntidadService<Libro>{
 
     @Override
     public Libro[] findByName(String title) {
+        quickSort();
         List<Libro> result = new ArrayList<>();
-        for (int i = 0; i < getCantidad(); i++) {
-            if (lista[i].getTitulo().contains(title)) {
-                result.add(lista[i]);
+        String nombreMinusculas = title.toLowerCase(); 
+
+        int left = 0;
+        int right = getCantidad() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            String nombreEnLista = lista[mid].getTitulo().toLowerCase(); 
+
+            int cmp = nombreEnLista.compareTo(nombreMinusculas);
+
+            if (cmp == 0) {
+                result.add(lista[mid]);
+                for (int i = mid - 1; i >= 0 && lista[i].getTitulo().equalsIgnoreCase(nombreMinusculas); i--) {
+                    result.add(lista[i]);
+                }
+                for (int i = mid + 1; i < getCantidad() && lista[i].getTitulo().equalsIgnoreCase(nombreMinusculas); i++) {
+                    result.add(lista[i]);
+                }
+                return result.toArray(new Libro[0]);
+            } else if (cmp < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
+
         return result.toArray(new Libro[0]);
     }
 
     @Override
     public int getCantidad() {
         return indice + 1;
+    }
+
+    @Override
+    public void quickSort() {
+        quickSort(0, getCantidad() - 1);
+    }
+    private void quickSort(int low, int high) {
+        if (low < high) {
+            int pi = partition(low, high);
+
+            quickSort(low, pi - 1);
+            quickSort(pi + 1, high);
+        }
+    }
+    private int partition(int low, int high) {
+        Libro pivot = lista[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (lista[j].getTitulo().compareTo(pivot.getTitulo()) < 0) {
+                i++;
+
+                Libro temp = lista[i];
+                lista[i] = lista[j];
+                lista[j] = temp;
+            }
+        }
+
+        Libro temp = lista[i + 1];
+        lista[i + 1] = lista[high];
+        lista[high] = temp;
+
+        return i + 1;
     }
 }

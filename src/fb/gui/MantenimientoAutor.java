@@ -31,13 +31,13 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
         modelo.addColumn("Nacionalidad");
         modelo.addColumn("Estado");
 
-        for (Autor l : lista) {
+        for (Autor a : lista) {
             Object[] fila = new Object[6];
-            fila[0] = l.getId();
-            fila[1] = l.getNombres();
-            fila[2] = l.getApellidos();
-            fila[3] = l.getNacionalidad();
-            fila[4] = l.getEstado();
+            fila[0] = a.getId();
+            fila[1] = a.getNombres();
+            fila[2] = a.getApellidos();
+            fila[3] = a.getNacionalidad();
+            fila[4] = a.getEstado();
             modelo.addRow(fila);
         }
     }
@@ -56,6 +56,10 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
         btnAgregar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        lblNombre = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        btnOrdenar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -94,6 +98,22 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
             }
         });
 
+        lblNombre.setText("Nombre:");
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        btnOrdenar.setText("Ordenar por Nombre");
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,22 +121,40 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAgregar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnActualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar)))
-                .addGap(12, 12, 12))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnAgregar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnActualizar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEliminar)))
+                        .addGap(12, 12, 12))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(lblNombre)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(89, 89, 89)
+                        .addComponent(btnBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnOrdenar)
+                        .addGap(33, 33, 33))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
-                .addGap(34, 34, 34)
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar)
+                    .addComponent(btnOrdenar))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,12 +217,56 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try {
+            String nombreBusqueda = txtNombre.getText().trim();
+            Autor[] resultadoBusqueda = AutorDaoFactory.getFabrica().getAutorDao(Constantes.ACTUAL).findByName(nombreBusqueda);
+            mostrarResultados(resultadoBusqueda);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+        try {
+        AutorDaoFactory.getFabrica().getAutorDao(Constantes.ACTUAL).quickSort();
+        cargarDatos(); // Recargar los datos después de ordenar
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error interno del sistema");
+    }
+    }//GEN-LAST:event_btnOrdenarActionPerformed
+    
+    private void mostrarResultados(Autor[] resultados) {
+    DefaultTableModel modelo = (DefaultTableModel) tbAutores.getModel();
+
+    modelo.setColumnCount(0);
+    modelo.setRowCount(0);
+    modelo.addColumn("Codigo");
+    modelo.addColumn("Nombres");
+    modelo.addColumn("Apellidos");
+    modelo.addColumn("Nacionalidad");
+    modelo.addColumn("Estado");
+
+    for (Autor a : resultados) {
+        Object[] fila = new Object[6];
+        fila[0] = a.getId();
+        fila[1] = a.getNombres();
+        fila[2] = a.getApellidos();
+        fila[3] = a.getNacionalidad();
+        fila[4] = a.getEstado();
+        modelo.addRow(fila);
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnOrdenar;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblNombre;
     private javax.swing.JTable tbAutores;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
