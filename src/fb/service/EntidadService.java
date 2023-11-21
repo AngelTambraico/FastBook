@@ -14,6 +14,7 @@ public interface EntidadService<T> {
     public boolean update(T t);
     public T findById(String id);
     public T[] findAll();
+    public void quickSort();
     public T[] findByName(String name);
     public int getCantidad();
 }
