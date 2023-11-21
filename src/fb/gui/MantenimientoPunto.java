@@ -115,7 +115,7 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
             }
         });
 
-        BtnOrdenar.setText("Ordenar por Dirección");
+        BtnOrdenar.setText("Ordenar");
         BtnOrdenar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnOrdenarActionPerformed(evt);
@@ -142,12 +142,12 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BtnOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(18, 18, 18)
+                .addComponent(BtnOrdenar)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,8 +157,8 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtNombre)
                     .addComponent(BtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BtnOrdenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addComponent(BtnOrdenar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -234,16 +234,18 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
             mostrarResultados(resultadoBusqueda);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
     }//GEN-LAST:event_BtnBuscarActionPerformed
 
     private void BtnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnOrdenarActionPerformed
-        try {
+        try {      
             PuntoDaoFactory.getFabrica().getPuntoDao(Constantes.ACTUAL).quickSort();
             cargarDatos(); // Recargar los datos después de ordenar
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error interno del sistema");
-        }
+            } catch (Exception ex) {    
+                JOptionPane.showMessageDialog(this, "Error interno del sistema");
+            }
     }//GEN-LAST:event_BtnOrdenarActionPerformed
+        
     
     private void mostrarResultados(Punto[] resultados) {
         DefaultTableModel modelo = (DefaultTableModel) tbPuntos.getModel();

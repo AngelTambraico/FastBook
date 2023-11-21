@@ -41,12 +41,12 @@
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtNombre" min="-2" pref="383" max="-2" attributes="0"/>
+              <Component id="txtNombre" min="-2" pref="413" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="BtnBuscar" min="-2" pref="97" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="BtnOrdenar" min="-2" pref="200" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="BtnOrdenar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="100" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -58,9 +58,9 @@
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtNombre" alignment="3" max="32767" attributes="0"/>
                   <Component id="BtnBuscar" alignment="3" max="32767" attributes="0"/>
-                  <Component id="BtnOrdenar" alignment="3" max="32767" attributes="0"/>
+                  <Component id="BtnOrdenar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="302" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -131,7 +131,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="BtnOrdenar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ordenar por Direcci&#xf3;n"/>
+        <Property name="text" type="java.lang.String" value="Ordenar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnOrdenarActionPerformed"/>
