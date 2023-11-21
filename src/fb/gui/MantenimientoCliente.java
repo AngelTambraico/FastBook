@@ -4,40 +4,49 @@
  */
 package fb.gui;
 
-import fb.daos.AutorDaoFactory;
-import fb.model.Autor;
+import fb.daos.ClienteDaoFactory;
+import fb.model.Cliente;
 import fb.util.Constantes;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-public class MantenimientoAutor extends javax.swing.JInternalFrame {
+/**
+ *
+ * @author USUARIO
+ */
+public class MantenimientoCliente extends javax.swing.JInternalFrame {
 
-    public MantenimientoAutor() {
+    /**
+     * Creates new form MantenimientoColaborador
+     */
+    public MantenimientoCliente() {
         initComponents();
         cargarDatos();
     }
 
     public void cargarDatos() {
-        var lista = AutorDaoFactory.getFabrica().getAutorDao(Constantes.ACTUAL).findAll();
-        DefaultTableModel modelo = (DefaultTableModel) tbAutores.getModel();
+        var lista = ClienteDaoFactory.getFabrica().getClienteDao(Constantes.ACTUAL).findAll();
+        DefaultTableModel modelo = (DefaultTableModel) tbClientes.getModel();
 
         modelo.setColumnCount(0);
         modelo.setRowCount(0);
         modelo.addColumn("Codigo");
-        modelo.addColumn("Nombres");
+        modelo.addColumn("Nombre");
         modelo.addColumn("Apellidos");
-        modelo.addColumn("Nacionalidad");
+        modelo.addColumn("Dirección");
+        modelo.addColumn("Teléfono");
         modelo.addColumn("Estado");
 
-        for (Autor a : lista) {
+        for (Cliente c : lista) {
             Object[] fila = new Object[6];
-            fila[0] = a.getId();
-            fila[1] = a.getNombres();
-            fila[2] = a.getApellidos();
-            fila[3] = a.getNacionalidad();
-            fila[4] = a.getEstado();
+            fila[0] = c.getId();
+            fila[1] = c.getNombre();
+            fila[2] = c.getApellidoPaterno()+" "+c.getApellidoMaterno();
+            fila[3] = c.getDireccion();
+            fila[4] = c.getTelefono();
+            fila[5] = c.getEstado();
             modelo.addRow(fila);
         }
     }
@@ -52,22 +61,22 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbAutores = new javax.swing.JTable();
+        tbClientes = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        lblNombre = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
-        btnOrdenar = new javax.swing.JButton();
+        BtnBuscar = new javax.swing.JButton();
+        BtnOrdenar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Autores");
+        setTitle("Clientes");
 
-        tbAutores.setModel(new javax.swing.table.DefaultTableModel(
+        tbClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -75,7 +84,7 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(tbAutores);
+        jScrollPane1.setViewportView(tbClientes);
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -98,19 +107,25 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
             }
         });
 
-        lblNombre.setText("Nombre:");
+        jLabel1.setText("Nombre: ");
 
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
+                txtNombreActionPerformed(evt);
             }
         });
 
-        btnOrdenar.setText("Ordenar por Nombre");
-        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+        BtnBuscar.setText("Buscar");
+        BtnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOrdenarActionPerformed(evt);
+                BtnBuscarActionPerformed(evt);
+            }
+        });
+
+        BtnOrdenar.setText("Ordenar por Nombre");
+        BtnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnOrdenarActionPerformed(evt);
             }
         });
 
@@ -121,40 +136,38 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnAgregar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnActualizar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminar)))
-                        .addGap(12, 12, 12))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(lblNombre)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(89, 89, 89)
-                        .addComponent(btnBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnOrdenar)
-                        .addGap(33, 33, 33))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAgregar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar)))
+                .addGap(12, 12, 12))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BtnOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombre)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar)
-                    .addComponent(btnOrdenar))
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtNombre)
+                    .addComponent(BtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BtnOrdenar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -167,9 +180,9 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
-            FormularioAutor.codigo="";
+            FormularioCliente.codigo="";
                 JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                FormularioAutor obj = new FormularioAutor(topFrame, true);
+                FormularioCliente obj = new FormularioCliente(topFrame, true);
                 obj.setVisible(true);
                 cargarDatos();
         } catch (Exception ex) {
@@ -179,12 +192,12 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         try {
-            int fila = tbAutores.getSelectedRow();
+            int fila = tbClientes.getSelectedRow();
 
             if (fila != -1) {
-                FormularioAutor.codigo = tbAutores.getValueAt(fila, 0).toString();
+                FormularioCliente.codigo = tbClientes.getValueAt(fila, 0).toString();
                 JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                FormularioAutor obj = new FormularioAutor(topFrame, true);
+                FormularioCliente obj = new FormularioCliente(topFrame, true);
                 obj.setVisible(true);
                 cargarDatos();
             } else {
@@ -197,12 +210,12 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try {
-            int fila = tbAutores.getSelectedRow();
+            int fila = tbClientes.getSelectedRow();
 
             if (fila != -1) {
                 int dialogResult = JOptionPane.showConfirmDialog (null, "¿Seguro de eliminar?","Aviso",0);
                 if(dialogResult == JOptionPane.YES_OPTION){
-                    if(AutorDaoFactory.getFabrica().getAutorDao(Constantes.ACTUAL).delete(tbAutores.getValueAt(fila, 0).toString())){
+                    if(ClienteDaoFactory.getFabrica().getClienteDao(Constantes.ACTUAL).delete(tbClientes.getValueAt(fila, 0).toString())){
                         JOptionPane.showMessageDialog(this, "Inactivado correctamente");                        
                     }else{
                         JOptionPane.showMessageDialog(this, "Error interno del sistema");                        
@@ -217,56 +230,60 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        try {
-            String nombreBusqueda = txtNombre.getText().trim();
-            Autor[] resultadoBusqueda = AutorDaoFactory.getFabrica().getAutorDao(Constantes.ACTUAL).findByName(nombreBusqueda);
-            mostrarResultados(resultadoBusqueda);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error interno del sistema");
-        }
-    }//GEN-LAST:event_btnBuscarActionPerformed
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+    private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
         try {
-        AutorDaoFactory.getFabrica().getAutorDao(Constantes.ACTUAL).quickSort();
+        String nombreBusqueda = txtNombre.getText().trim();
+        Cliente[] resultadoBusqueda = ClienteDaoFactory.getFabrica().getClienteDao(Constantes.ACTUAL).findByName(nombreBusqueda);
+        mostrarResultados(resultadoBusqueda);
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error interno del sistema");
+    }//GEN-LAST:event_BtnBuscarActionPerformed
+    }
+    private void BtnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnOrdenarActionPerformed
+      try {
+        ClienteDaoFactory.getFabrica().getClienteDao(Constantes.ACTUAL).quickSort();
         cargarDatos(); // Recargar los datos después de ordenar
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(this, "Error interno del sistema");
     }
-    }//GEN-LAST:event_btnOrdenarActionPerformed
-    
-    private void mostrarResultados(Autor[] resultados) {
-    DefaultTableModel modelo = (DefaultTableModel) tbAutores.getModel();
+    }//GEN-LAST:event_BtnOrdenarActionPerformed
+private void mostrarResultados(Cliente[] resultados) {
+    DefaultTableModel modelo = (DefaultTableModel) tbClientes.getModel();
 
     modelo.setColumnCount(0);
     modelo.setRowCount(0);
     modelo.addColumn("Codigo");
-    modelo.addColumn("Nombres");
+    modelo.addColumn("Nombre");
     modelo.addColumn("Apellidos");
-    modelo.addColumn("Nacionalidad");
+    modelo.addColumn("Dirección");
+    modelo.addColumn("Teléfono");
     modelo.addColumn("Estado");
 
-    for (Autor a : resultados) {
+    for (Cliente c : resultados) {
         Object[] fila = new Object[6];
-        fila[0] = a.getId();
-        fila[1] = a.getNombres();
-        fila[2] = a.getApellidos();
-        fila[3] = a.getNacionalidad();
-        fila[4] = a.getEstado();
+        fila[0] = c.getId();
+        fila[1] = c.getNombre();
+        fila[2] = c.getApellidoPaterno() + " " + c.getApellidoMaterno();
+        fila[3] = c.getDireccion();
+        fila[4] = c.getTelefono();
+        fila[5] = c.getEstado();
         modelo.addRow(fila);
     }
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnBuscar;
+    private javax.swing.JButton BtnOrdenar;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnOrdenar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblNombre;
-    private javax.swing.JTable tbAutores;
+    private javax.swing.JTable tbClientes;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

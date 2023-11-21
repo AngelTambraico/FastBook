@@ -133,7 +133,7 @@ public class UsuarioDaoMemory implements UsuarioService {
     }
 
     @Override
-    public Usuario[] orderByName() {
+    public void quickSort() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

@@ -4,8 +4,8 @@
  */
 package fb.gui;
 
-import fb.daos.LibroDaoFactory;
-import fb.model.Libro;
+import fb.daos.ClienteDaoFactory;
+import fb.model.Cliente;
 import fb.util.Constantes;
 import javax.swing.JOptionPane;
 
@@ -13,24 +13,25 @@ import javax.swing.JOptionPane;
  *
  * @author USUARIO
  */
-public class FormularioLibro extends javax.swing.JDialog {
+public class FormularioCliente extends javax.swing.JDialog {
 
     /**
      * Creates new form FormularioColaborador
      */
     public static String codigo;
-    public FormularioLibro(java.awt.Frame parent, boolean modal) {
+    public FormularioCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         lblEstado.setVisible(false);
-        Libro l = LibroDaoFactory.getFabrica().getLibroDao(Constantes.ACTUAL).findById(codigo);
-        if(l!=null){
-            txtAutor.setText(l.getIdAutor());
-            txtTitulo.setText(l.getTitulo());
-            txtPrecio.setText(Double.toString(l.getPrecio()));
-            txtStock.setText(Integer.toString(l.getStock()));
-            lblEstado.setText(l.getEstado());
+        Cliente c = ClienteDaoFactory.getFabrica().getClienteDao(Constantes.ACTUAL).findById(codigo);
+        if(c!=null){
+            txtNombres.setText(c.getNombre());
+            txtApellidoPaterno.setText(c.getApellidoPaterno());
+            txtApellidoMaterno.setText(c.getApellidoMaterno());
+            txtDireccion.setText(c.getDireccion());
+            txtTelefono.setText(c.getTelefono());
+            lblEstado.setText(c.getEstado());
         }
     }
 
@@ -43,25 +44,35 @@ public class FormularioLibro extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblAutor = new javax.swing.JLabel();
-        txtAutor = new javax.swing.JTextField();
-        lblPrecio = new javax.swing.JLabel();
-        txtPrecio = new javax.swing.JTextField();
-        lblStock = new javax.swing.JLabel();
-        txtStock = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txtNombres = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtApellidoMaterno = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtDireccion = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtTelefono = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
         btnGrabar = new javax.swing.JButton();
-        lblTitulo = new javax.swing.JLabel();
-        txtTitulo = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtApellidoPaterno = new javax.swing.JTextField();
         lblEstado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        lblAutor.setText("Autor");
+        jLabel1.setText("Nombres");
 
-        lblPrecio.setText("Precio");
+        txtNombres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombresActionPerformed(evt);
+            }
+        });
 
-        lblStock.setText("Stock");
+        jLabel2.setText("Apellido materno");
+
+        jLabel3.setText("Dirección");
+
+        jLabel4.setText("Teléfono");
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -77,7 +88,7 @@ public class FormularioLibro extends javax.swing.JDialog {
             }
         });
 
-        lblTitulo.setText("Titulo");
+        jLabel5.setText("Apellido paterno");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,7 +97,7 @@ public class FormularioLibro extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGrabar)
@@ -94,47 +105,54 @@ public class FormularioLibro extends javax.swing.JDialog {
                         .addComponent(btnCancelar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblStock)
-                            .addComponent(lblAutor)
-                            .addComponent(lblTitulo)
-                            .addComponent(lblPrecio))
-                        .addGap(41, 41, 41)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2))
+                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAutor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(105, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtApellidoPaterno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombres, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAutor)
-                    .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1)
+                    .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTitulo)
-                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5)
+                    .addComponent(txtApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPrecio)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblStock)
-                    .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3)
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(16, 16, 16)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGrabar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnGrabar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         pack();
@@ -142,14 +160,15 @@ public class FormularioLibro extends javax.swing.JDialog {
 
     private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
         try{
-            Libro l = new Libro(
-                    txtAutor.getText(),
-                    txtTitulo.getText(), 
-                    Double.parseDouble(txtPrecio.getText()),
-                    Integer.parseInt(txtStock.getText()));
+            Cliente c = new Cliente(
+                    txtNombres.getText(), 
+                    txtApellidoPaterno.getText(),
+                    txtApellidoMaterno.getText(),
+                    txtDireccion.getText(), 
+                    txtTelefono.getText());
             if(codigo.isBlank())
             {                
-                if(LibroDaoFactory.getFabrica().getLibroDao(Constantes.ACTUAL).create(l))
+                if(ClienteDaoFactory.getFabrica().getClienteDao(Constantes.ACTUAL).create(c))
                 {
                     JOptionPane.showMessageDialog(null, "Creado correctamente");
                     this.dispose();
@@ -161,9 +180,9 @@ public class FormularioLibro extends javax.swing.JDialog {
             }
             else
             {
-                l.setEstado(lblEstado.getText());
-                l.setId(codigo);
-                if(LibroDaoFactory.getFabrica().getLibroDao(Constantes.ACTUAL).update(l))
+                c.setEstado(lblEstado.getText());
+                c.setId(codigo);
+                if(ClienteDaoFactory.getFabrica().getClienteDao(Constantes.ACTUAL).update(c))
                 {
                     JOptionPane.showMessageDialog(null, "Modificado correctamente");
                     this.dispose();
@@ -182,6 +201,10 @@ public class FormularioLibro extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void txtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombresActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -199,13 +222,13 @@ public class FormularioLibro extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormularioLibro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormularioCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormularioLibro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormularioCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormularioLibro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormularioCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormularioLibro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormularioCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -213,7 +236,7 @@ public class FormularioLibro extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FormularioLibro dialog = new FormularioLibro(new javax.swing.JFrame(), true);
+                FormularioCliente dialog = new FormularioCliente(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -228,14 +251,16 @@ public class FormularioLibro extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGrabar;
-    private javax.swing.JLabel lblAutor;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lblEstado;
-    private javax.swing.JLabel lblPrecio;
-    private javax.swing.JLabel lblStock;
-    private javax.swing.JLabel lblTitulo;
-    private javax.swing.JTextField txtAutor;
-    private javax.swing.JTextField txtPrecio;
-    private javax.swing.JTextField txtStock;
-    private javax.swing.JTextField txtTitulo;
+    private javax.swing.JTextField txtApellidoMaterno;
+    private javax.swing.JTextField txtApellidoPaterno;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtNombres;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }
