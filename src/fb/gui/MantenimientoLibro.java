@@ -58,7 +58,7 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
         btnAgregar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        lblNombre = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnOrdenar = new javax.swing.JButton();
@@ -100,7 +100,7 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
             }
         });
 
-        lblNombre.setText("Nombre:");
+        lblTitulo.setText("Titulo:");
 
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,7 +142,7 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
                         .addGap(12, 12, 12))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(lblNombre)
+                        .addComponent(lblTitulo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(77, 77, 77)
@@ -159,7 +159,7 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar)
                     .addComponent(btnOrdenar)
-                    .addComponent(lblNombre))
+                    .addComponent(lblTitulo))
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
@@ -279,7 +279,7 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnOrdenar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tbLibros;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
