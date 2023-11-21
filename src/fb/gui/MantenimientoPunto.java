@@ -67,6 +67,10 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
         BtnBuscar = new javax.swing.JButton();
         BtnOrdenar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Puntos");
 
         tbPuntos.setModel(new javax.swing.table.DefaultTableModel(
@@ -115,7 +119,7 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
             }
         });
 
-        BtnOrdenar.setText("Ordenar");
+        BtnOrdenar.setText("Ordenar por dirección");
         BtnOrdenar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnOrdenarActionPerformed(evt);
@@ -145,9 +149,9 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnOrdenar)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
