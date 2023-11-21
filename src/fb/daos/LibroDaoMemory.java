@@ -133,11 +133,12 @@ public class LibroDaoMemory implements EntidadService<Libro>{
     public int getCantidad() {
         return indice + 1;
     }
-
+  
     @Override
     public void quickSort() {
         quickSort(0, getCantidad() - 1);
     }
+  
     private void quickSort(int low, int high) {
         if (low < high) {
             int pi = partition(low, high);
@@ -146,6 +147,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
             quickSort(pi + 1, high);
         }
     }
+  
     private int partition(int low, int high) {
         Libro pivot = lista[high];
         int i = low - 1;

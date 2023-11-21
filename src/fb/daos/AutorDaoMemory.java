@@ -7,12 +7,14 @@ package fb.daos;
 import fb.model.Autor;
 import fb.service.EntidadService;
 import fb.util.Constantes;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class AutorDaoMemory implements EntidadService<Autor>{
-    
+/**
+ *
+ * @author USUARIO
+ */
+public class AutorDaoMemory implements EntidadService<Autor>{  
     private Autor[] lista;
     private int indice;
 

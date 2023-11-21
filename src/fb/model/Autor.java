@@ -11,7 +11,7 @@ public class Autor {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.nacionalidad = nacionalidad;
-        this.estado = "ACTIVO";
+        this.estado = "ACTIVO";    
     }
 
     public String getId() {
@@ -21,7 +21,7 @@ public class Autor {
     public void setId(String id) {
         this.id = id;
     }
-
+  
     public String getNombres() {
         return nombres;
     }
