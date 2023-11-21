@@ -186,14 +186,12 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
         return i + 1;
     }
     @Override
-        public Cliente[] findByName(String nombre) {
+    public Cliente[] findByName(String nombre) {
     quickSort();
     List<Cliente> result = new ArrayList<>();
     String nombreMinusculas = nombre.toLowerCase(); 
-
     int left = 0;
     int right = getCantidad() - 1;
-
     while (left <= right) {
         int mid = left + (right - left) / 2;
         String nombreEnLista = lista[mid].getNombre().toLowerCase(); 
@@ -202,10 +200,12 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
 
         if (cmp == 0) {
             result.add(lista[mid]);
-            for (int i = mid - 1; i >= 0 && lista[i].getNombre().equalsIgnoreCase(nombreMinusculas); i--) {
+            // Buscar hacia atrás
+            for (int i = mid - 1; i >= 0 && lista[i].getNombre().toLowerCase().contains(nombreMinusculas); i--) {
                 result.add(lista[i]);
             }
-            for (int i = mid + 1; i < getCantidad() && lista[i].getNombre().equalsIgnoreCase(nombreMinusculas); i++) {
+            // Buscar hacia adelante
+            for (int i = mid + 1; i < getCantidad() && lista[i].getNombre().toLowerCase().contains(nombreMinusculas); i++) {
                 result.add(lista[i]);
             }
             return result.toArray(new Cliente[0]);
@@ -213,6 +213,12 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
             left = mid + 1;
         } else {
             right = mid - 1;
+        }
+    }
+    for (int i = 0; i < getCantidad(); i++) {
+        String nombreEnLista = lista[i].getNombre().toLowerCase();
+        if (nombreEnLista.contains(nombreMinusculas)) {
+            result.add(lista[i]);
         }
     }
 
@@ -226,9 +232,5 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
 
    
 
-    @Override
-    public Cliente[] orderByName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+    
 }
