@@ -37,7 +37,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        miCliente = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         miColaborador = new javax.swing.JMenuItem();
 
@@ -68,8 +68,13 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem3.setText("Punto de entrega");
         jMenu2.add(jMenuItem3);
 
-        jMenuItem4.setText("Cliente");
-        jMenu2.add(jMenuItem4);
+        miCliente.setText("Cliente");
+        miCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miClienteActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miCliente);
         jMenu2.add(jSeparator1);
 
         miColaborador.setText("Colaborador");
@@ -110,6 +115,18 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_miColaboradorActionPerformed
 
+    private void miClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miClienteActionPerformed
+        try {            
+            MantenimientoCliente man = new MantenimientoCliente();
+            dpContenedor.add(man);
+            man.setVisible(true);
+            man.setMaximum(false);
+            man.setLocation((dpContenedor.getSize().width - man.getSize().width)/2, (dpContenedor.getSize().height - man.getSize().height)/2);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_miClienteActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -152,9 +169,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuBar mbMenu;
+    private javax.swing.JMenuItem miCliente;
     private javax.swing.JMenuItem miColaborador;
     // End of variables declaration//GEN-END:variables
 }
