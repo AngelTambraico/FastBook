@@ -58,8 +58,8 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
         btnAgregar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        lblNombre = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
+        lblTitulo = new javax.swing.JLabel();
+        txtTitulo = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnOrdenar = new javax.swing.JButton();
 
@@ -100,11 +100,11 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
             }
         });
 
-        lblNombre.setText("Nombre:");
+        lblTitulo.setText("Titulo:");
 
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+        txtTitulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
+                txtTituloActionPerformed(evt);
             }
         });
 
@@ -142,9 +142,9 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
                         .addGap(12, 12, 12))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(lblNombre)
+                        .addComponent(lblTitulo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(77, 77, 77)
                         .addComponent(btnBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -156,10 +156,10 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar)
                     .addComponent(btnOrdenar)
-                    .addComponent(lblNombre))
+                    .addComponent(lblTitulo))
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
@@ -225,13 +225,13 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+    private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
+    }//GEN-LAST:event_txtTituloActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
-        String nombreBusqueda = txtNombre.getText().trim();
+        String nombreBusqueda = txtTitulo.getText().trim();
         Libro[] resultadoBusqueda = LibroDaoFactory.getFabrica().getLibroDao(Constantes.ACTUAL).findByName(nombreBusqueda);
         mostrarResultados(resultadoBusqueda);
     } catch (Exception ex) {
@@ -279,8 +279,8 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnOrdenar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tbLibros;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }
