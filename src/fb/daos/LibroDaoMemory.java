@@ -35,6 +35,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return instancia;
     }
 
+    @Override
     public boolean create(Libro libro) {
         boolean result = false;
         String id;
@@ -48,6 +49,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return result;
     }
 
+    @Override
     public boolean delete(String id) {
         boolean result = false;
         for (int i = 0; i < getCantidad(); i++) {
@@ -59,6 +61,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return result;
     }
 
+    @Override
     public boolean update(Libro libro) {
         boolean result = false;
         for (int i = 0; i < getCantidad(); i++) {
@@ -71,6 +74,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return result;
     }
 
+    @Override
     public Libro findById(String id) {
         Libro result = null;
         for (int i = 0; i < getCantidad(); i++) {
@@ -82,6 +86,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return result;
     }
 
+    @Override
     public Libro[] findAll() {
         List<Libro> result = new ArrayList<>();
         for (int i = 0; i < getCantidad(); i++) {
@@ -90,27 +95,79 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         return result.toArray(new Libro[0]);
     }
 
-    public Libro[] findByTitle(String title) {
+    @Override
+    public Libro[] findByName(String title) {
+        quickSort();
         List<Libro> result = new ArrayList<>();
-        for (int i = 0; i < getCantidad(); i++) {
-            if (lista[i].getTitulo().contains(title)) {
-                result.add(lista[i]);
+        String nombreMinusculas = title.toLowerCase(); 
+
+        int left = 0;
+        int right = getCantidad() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            String nombreEnLista = lista[mid].getTitulo().toLowerCase(); 
+
+            int cmp = nombreEnLista.compareTo(nombreMinusculas);
+
+            if (cmp == 0) {
+                result.add(lista[mid]);
+                for (int i = mid - 1; i >= 0 && lista[i].getTitulo().equalsIgnoreCase(nombreMinusculas); i--) {
+                    result.add(lista[i]);
+                }
+                for (int i = mid + 1; i < getCantidad() && lista[i].getTitulo().equalsIgnoreCase(nombreMinusculas); i++) {
+                    result.add(lista[i]);
+                }
+                return result.toArray(new Libro[0]);
+            } else if (cmp < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
+
         return result.toArray(new Libro[0]);
     }
 
+    @Override
     public int getCantidad() {
         return indice + 1;
     }
-
-    @Override
-    public Libro[] findByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
+  
     @Override
     public void quickSort() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        quickSort(0, getCantidad() - 1);
     }
+  
+    private void quickSort(int low, int high) {
+        if (low < high) {
+            int pi = partition(low, high);
+
+            quickSort(low, pi - 1);
+            quickSort(pi + 1, high);
+        }
+    }
+  
+    private int partition(int low, int high) {
+        Libro pivot = lista[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (lista[j].getTitulo().compareTo(pivot.getTitulo()) < 0) {
+                i++;
+
+                Libro temp = lista[i];
+                lista[i] = lista[j];
+                lista[j] = temp;
+            }
+        }
+
+        Libro temp = lista[i + 1];
+        lista[i + 1] = lista[high];
+        lista[high] = temp;
+
+        return i + 1;
+    }
+
+    
 }

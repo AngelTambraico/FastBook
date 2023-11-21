@@ -2,17 +2,16 @@ package fb.model;
 
 public class Autor {
     private String id;
-    private String nombre;
-    private String apellido;
+    private String nombres;
+    private String apellidos;
     private String nacionalidad;
     private String estado;
 
-    public Autor(String id, String nombre, String apellido, String nacionalidad, String estado) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
+    public Autor(String nombres, String apellidos, String nacionalidad) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
         this.nacionalidad = nacionalidad;
-        this.estado = estado;
+        this.estado = "ACTIVO";    
     }
 
     public String getId() {
@@ -22,21 +21,21 @@ public class Autor {
     public void setId(String id) {
         this.id = id;
     }
-
-    public String getNombre() {
-        return nombre;
+  
+    public String getNombres() {
+        return nombres;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public String getNacionalidad() {
@@ -54,5 +53,4 @@ public class Autor {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
 }
