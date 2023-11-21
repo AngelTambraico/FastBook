@@ -35,9 +35,9 @@ public class Principal extends javax.swing.JFrame {
         mbMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        miAutor = new javax.swing.JMenuItem();
+        miLibro = new javax.swing.JMenuItem();
+        miPunto = new javax.swing.JMenuItem();
         miCliente = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         miColaborador = new javax.swing.JMenuItem();
@@ -64,20 +64,35 @@ public class Principal extends javax.swing.JFrame {
         mbMenu.add(jMenu1);
 
         jMenu2.setText("Mantenimiento");
-
-        jMenuItem1.setText("Autor");
-        jMenu2.add(jMenuItem1);
-
-        jMenuItem2.setText("Libro");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jMenu2ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
 
-        jMenuItem3.setText("Punto de entrega");
-        jMenu2.add(jMenuItem3);
+        miAutor.setText("Autor");
+        miAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAutorActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miAutor);
+
+        miLibro.setText("Libro");
+        miLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miLibroActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miLibro);
+
+        miPunto.setText("Punto de entrega");
+        miPunto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miPuntoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miPunto);
 
         miCliente.setText("Cliente");
         miCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -165,9 +180,45 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_miRegistroPedidoActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void miAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAutorActionPerformed
+        try {            
+            MantenimientoAutor aut = new MantenimientoAutor();
+            dpContenedor.add(aut);
+            aut.setVisible(true);
+            aut.setMaximum(false);
+            aut.setLocation((dpContenedor.getSize().width - aut.getSize().width)/2, (dpContenedor.getSize().height - aut.getSize().height)/2);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_miAutorActionPerformed
+
+    private void miLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLibroActionPerformed
+        try {            
+            MantenimientoLibro lib = new MantenimientoLibro();
+            dpContenedor.add(lib);
+            lib.setVisible(true);
+            lib.setMaximum(false);
+            lib.setLocation((dpContenedor.getSize().width - lib.getSize().width)/2, (dpContenedor.getSize().height - lib.getSize().height)/2);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_miLibroActionPerformed
+
+    private void miPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPuntoActionPerformed
+        try {            
+            MantenimientoPunto lib = new MantenimientoPunto();
+            dpContenedor.add(lib);
+            lib.setVisible(true);
+            lib.setMaximum(false);
+            lib.setLocation((dpContenedor.getSize().width - lib.getSize().width)/2, (dpContenedor.getSize().height - lib.getSize().height)/2);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_miPuntoActionPerformed
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jMenu2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,13 +261,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuBar mbMenu;
+    private javax.swing.JMenuItem miAutor;
     private javax.swing.JMenuItem miCliente;
     private javax.swing.JMenuItem miColaborador;
+    private javax.swing.JMenuItem miLibro;
+    private javax.swing.JMenuItem miPunto;
     private javax.swing.JMenuItem miRegistroPedido;
     private javax.swing.JMenuItem miSeguimientoPedido;
     // End of variables declaration//GEN-END:variables

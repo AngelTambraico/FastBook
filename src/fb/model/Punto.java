@@ -8,8 +8,7 @@ public class Punto {
     private String direccion;
     private String estado;
 
-    public Punto(String id, float latitud, float longitud, String distrito, String direccion) {
-        this.id = id;
+    public Punto(float latitud, float longitud, String distrito, String direccion) {
         this.latitud = latitud;
         this.longitud = longitud;
         this.distrito = distrito;
