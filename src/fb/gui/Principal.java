@@ -30,6 +30,7 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu3 = new javax.swing.JMenu();
         dpContenedor = new javax.swing.JDesktopPane();
         mbMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -40,6 +41,11 @@ public class Principal extends javax.swing.JFrame {
         miCliente = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         miColaborador = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        miRegistroPedido = new javax.swing.JMenuItem();
+        miSeguimientoPedido = new javax.swing.JMenuItem();
+
+        jMenu3.setText("jMenu3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,6 +103,21 @@ public class Principal extends javax.swing.JFrame {
 
         mbMenu.add(jMenu2);
 
+        jMenu4.setText("Ventas");
+
+        miRegistroPedido.setText("Registro de Pedido");
+        miRegistroPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegistroPedidoActionPerformed(evt);
+            }
+        });
+        jMenu4.add(miRegistroPedido);
+
+        miSeguimientoPedido.setText("Seguimiento de Pedido");
+        jMenu4.add(miSeguimientoPedido);
+
+        mbMenu.add(jMenu4);
+
         setJMenuBar(mbMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,6 +158,18 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_miClienteActionPerformed
 
+    private void miRegistroPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegistroPedidoActionPerformed
+         try {            
+            RegistroPedido rp = new RegistroPedido();
+            dpContenedor.add(rp);
+            rp.setVisible(true);
+            rp.setMaximum(false);            
+            rp.setLocation((dpContenedor.getSize().width - rp.getSize().width)/2, (dpContenedor.getSize().height - rp.getSize().height)/2);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_miRegistroPedidoActionPerformed
+
     private void miAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAutorActionPerformed
         try {            
             MantenimientoAutor aut = new MantenimientoAutor();
@@ -151,7 +184,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void miLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLibroActionPerformed
         try {            
-            MantenimientoCliente lib = new MantenimientoCliente();
+            MantenimientoLibro lib = new MantenimientoLibro();
             dpContenedor.add(lib);
             lib.setVisible(true);
             lib.setMaximum(false);
@@ -160,7 +193,7 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_miLibroActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
@@ -207,5 +240,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miCliente;
     private javax.swing.JMenuItem miColaborador;
     private javax.swing.JMenuItem miLibro;
+    private javax.swing.JMenuItem miRegistroPedido;
+    private javax.swing.JMenuItem miSeguimientoPedido;
     // End of variables declaration//GEN-END:variables
 }

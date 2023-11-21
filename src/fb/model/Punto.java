@@ -1,7 +1,6 @@
 package fb.model;
 
 public class Punto {
-    
     private String id;
     private float latitud;
     private float longitud;
@@ -65,7 +64,5 @@ public class Punto {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    
-    
+
 }
