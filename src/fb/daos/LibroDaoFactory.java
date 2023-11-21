@@ -24,13 +24,13 @@ public class LibroDaoFactory {
         return fabrica;
     }
 //
-//    public EntidadService<Libro> getLibroDao(int tipo) {
-//        EntidadService<Libro> e = null;
-//        switch (tipo) {
-//            case Constantes.MEMO: 
-//                e = LibroDaoMemory.getInstancia();
-//            break;
-//        }
-//        return e;
-//    }
+public EntidadService<Libro> getLibroDao(int tipo) {
+EntidadService<Libro> e = null;
+switch (tipo) {
+case Constantes.MEMO: 
+e = LibroDaoMemory.getInstancia();
+break;
+        }
+return e;
+}
 }

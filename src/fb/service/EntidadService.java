@@ -16,6 +16,5 @@ public interface EntidadService<T> {
     public T[] findAll();
     public void quickSort();
     public T[] findByName(String name);
-    public T[] orderByName();
     public int getCantidad();
 }
