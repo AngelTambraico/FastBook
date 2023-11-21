@@ -15,5 +15,6 @@ public interface EntidadService<T> {
     public T findById(String id);
     public T[] findAll();
     public T[] findByName(String name);
+    public T[] orderByName();
     public int getCantidad();
 }

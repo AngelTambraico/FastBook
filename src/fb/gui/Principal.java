@@ -30,6 +30,7 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu3 = new javax.swing.JMenu();
         dpContenedor = new javax.swing.JDesktopPane();
         mbMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -40,6 +41,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         miColaborador = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        miRegistroPedido = new javax.swing.JMenuItem();
+        miSeguimientoPedido = new javax.swing.JMenuItem();
+
+        jMenu3.setText("jMenu3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,6 +88,21 @@ public class Principal extends javax.swing.JFrame {
 
         mbMenu.add(jMenu2);
 
+        jMenu4.setText("Ventas");
+
+        miRegistroPedido.setText("Registro de Pedido");
+        miRegistroPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRegistroPedidoActionPerformed(evt);
+            }
+        });
+        jMenu4.add(miRegistroPedido);
+
+        miSeguimientoPedido.setText("Seguimiento de Pedido");
+        jMenu4.add(miSeguimientoPedido);
+
+        mbMenu.add(jMenu4);
+
         setJMenuBar(mbMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -109,6 +130,18 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_miColaboradorActionPerformed
+
+    private void miRegistroPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegistroPedidoActionPerformed
+         try {            
+            RegistroPedido rp = new RegistroPedido();
+            dpContenedor.add(rp);
+            rp.setVisible(true);
+            rp.setMaximum(false);            
+            rp.setLocation((dpContenedor.getSize().width - rp.getSize().width)/2, (dpContenedor.getSize().height - rp.getSize().height)/2);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_miRegistroPedidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,6 +182,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane dpContenedor;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
@@ -156,5 +191,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuBar mbMenu;
     private javax.swing.JMenuItem miColaborador;
+    private javax.swing.JMenuItem miRegistroPedido;
+    private javax.swing.JMenuItem miSeguimientoPedido;
     // End of variables declaration//GEN-END:variables
 }

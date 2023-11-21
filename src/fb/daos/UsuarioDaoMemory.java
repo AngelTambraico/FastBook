@@ -132,4 +132,9 @@ public class UsuarioDaoMemory implements UsuarioService {
         return result;
     }
 
+    @Override
+    public Usuario[] orderByName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
