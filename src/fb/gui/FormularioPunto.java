@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package fb.gui;
-
+import fb.daos.PuntoDaoFactory;
+import fb.model.Punto;
+import fb.util.Constantes;
+import javax.swing.JOptionPane;
 /**
  *
  * @author USUARIO
@@ -13,9 +16,21 @@ public class FormularioPunto extends javax.swing.JDialog {
     /**
      * Creates new form FormularioPunto
      */
+    public static String codigo;
     public FormularioPunto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
+        lblEstado.setVisible(false);
+        Punto p = PuntoDaoFactory.getFabrica().getPuntoDao(Constantes.ACTUAL).findById(codigo);
+        if(p!=null){
+            txtDireccion.setText(p.getDireccion());
+            txtLatitud.setText(String.valueOf(p.getLatitud()));
+            txtLongitud.setText(String.valueOf(p.getLongitud()));
+            txtDistrito.setText(p.getDistrito());
+            txtDireccion.setText(p.getDireccion());
+            lblEstado.setText(p.getEstado());
+        }
     }
 
     /**
@@ -27,21 +42,169 @@ public class FormularioPunto extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
+        jLabel3 = new javax.swing.JLabel();
+        txtDireccion = new javax.swing.JTextField();
+        btnCancelar = new javax.swing.JButton();
+        btnGrabar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtLongitud = new javax.swing.JTextField();
+        txtLatitud = new javax.swing.JTextField();
+        lblEstado = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtDistrito = new javax.swing.JTextField();
+
+        jScrollPane1.setViewportView(jTextPane1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel3.setText("Dirección");
+
+        txtDireccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDireccionActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnGrabar.setText("Grabar");
+        btnGrabar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrabarActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Longitud");
+
+        jLabel1.setText("Latitud");
+
+        txtLatitud.setEditable(false);
+        txtLatitud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLatitudActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Distrito");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnGrabar)
+                        .addGap(25, 25, 25)
+                        .addComponent(btnCancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLongitud, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDistrito, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLatitud, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtLatitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(lblEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGrabar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
+        try{
+            Punto p = new Punto(          
+                Float.valueOf(txtLatitud.getText()),
+                Float.valueOf(txtLongitud.getText()),
+                txtDistrito.getText(),
+                txtDireccion.getText());
+            if(codigo.isBlank())
+            {
+                if(PuntoDaoFactory.getFabrica().getPuntoDao(Constantes.ACTUAL).create(p))
+                {
+                    JOptionPane.showMessageDialog(null, "Creado correctamente");
+                    this.dispose();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Error: verifique los campos ingresados");
+                }
+            }
+            else
+            {
+                p.setEstado(lblEstado.getText());
+                p.setId(codigo);
+                if(PuntoDaoFactory.getFabrica().getPuntoDao(Constantes.ACTUAL).update(p))
+                {
+                    JOptionPane.showMessageDialog(null, "Modificado correctamente");
+                    this.dispose();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Error: verifique los campos ingresados");
+                }
+            }
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnGrabarActionPerformed
+
+    private void txtLatitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLatitudActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLatitudActionPerformed
+
+    private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDireccionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -86,5 +249,18 @@ public class FormularioPunto extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGrabar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtDistrito;
+    private javax.swing.JTextField txtLatitud;
+    private javax.swing.JTextField txtLongitud;
     // End of variables declaration//GEN-END:variables
 }
