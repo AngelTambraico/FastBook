@@ -5,7 +5,6 @@
 package fb.daos;
 
 import fb.model.Cliente;
-import fb.model.Colaborador;
 import fb.service.EntidadService;
 import fb.util.Constantes;
 import java.util.ArrayList;

@@ -9,13 +9,13 @@ public class Punto {
     private String direccion;
     private String estado;
 
-    public Punto(String id, float latitud, float longitud, String distrito, String direccion, String estado) {
+    public Punto(String id, float latitud, float longitud, String distrito, String direccion) {
         this.id = id;
         this.latitud = latitud;
         this.longitud = longitud;
         this.distrito = distrito;
         this.direccion = direccion;
-        this.estado = estado;
+        this.estado = "ACTIVO";
     }
 
     public String getId() {
