@@ -177,20 +177,4 @@ public class AutorDaoMemory implements EntidadService<Autor>{
 
         return i + 1;
     }
-
-    @Override
-    public Autor[] orderByName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    public boolean createFromFile(Autor autor) {
-        boolean result = false;
-        String id;
-        if (autor instanceof Autor) {
-            indice++;            
-            lista[indice] = autor;
-            result = true;
-        }
-        return result;
-    }
 }
