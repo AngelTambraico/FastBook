@@ -7,6 +7,9 @@ package fb.daos;
 import fb.model.Autor;
 import fb.service.EntidadService;
 import fb.util.Constantes;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +27,35 @@ public class AutorDaoMemory implements EntidadService<Autor>{
         lista = new Autor[Constantes.CANTIDAD_MEMO];
         indice = -1;
 
-        Autor autorPrueba = new Autor(
-                "Camila",
-                "Garcia Chamorro",
-                "Peruana"
-        );
-        create(autorPrueba);
+       cargarDatosDesdeCSV("DatadePrueba.csv");
     }
 
+    private void cargarDatosDesdeCSV(String ruta) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(ruta))) {
+        String linea;
+        while ((linea = reader.readLine()) != null) {
+            String[] campos = linea.split(",");
+            if (campos.length == 5) {
+                String id = campos[0].trim();
+                String nombres = campos[1].trim();
+                String apellidos = campos[2].trim();
+                String nacionalidad = campos[3].trim();
+                String estado = campos[4].trim();
+
+                Autor autor = new Autor(nombres, apellidos, nacionalidad);
+                autor.setId(id);
+                autor.setEstado(estado);
+
+                // Utiliza el método createFromFile en lugar de create
+                createFromFile(autor);
+            } else {
+                System.err.println("Formato de línea incorrecto en el archivo CSV.");
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
     public static AutorDaoMemory getInstancia() {
         if (instancia == null) {
             instancia = new AutorDaoMemory();
@@ -78,6 +102,16 @@ public class AutorDaoMemory implements EntidadService<Autor>{
         }
         return result;
     }
+    public boolean createFromFile(Autor autor) {
+        boolean result = false;
+        String id;
+        if (autor instanceof Autor) {
+            indice++;            
+            lista[indice] = autor;
+            result = true;
+        }
+        return result;
+    }
 
     @Override
     public Autor findById(String id) {
@@ -90,7 +124,6 @@ public class AutorDaoMemory implements EntidadService<Autor>{
         }
         return result;
     }
-
     @Override
     public Autor[] findAll() {
         List<Autor> result = new ArrayList<>();
