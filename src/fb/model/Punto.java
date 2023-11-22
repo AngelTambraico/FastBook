@@ -5,15 +5,18 @@ public class Punto {
     private float latitud;
     private float longitud;
     private String distrito;
+    private String nombre;
     private String direccion;
+    private String tipo;
     private String estado;
 
-    public Punto(String id, float latitud, float longitud, String distrito, String direccion) {
-        this.id = id;
+    public Punto(float latitud, float longitud, String distrito, String nombre, String direccion, String tipo) {
         this.latitud = latitud;
         this.longitud = longitud;
         this.distrito = distrito;
+        this.nombre = nombre;
         this.direccion = direccion;
+        this.tipo = tipo;
         this.estado = "ACTIVO";
     }
 
@@ -63,6 +66,22 @@ public class Punto {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
 }

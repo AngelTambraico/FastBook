@@ -12,8 +12,8 @@ public class Autor {
         this.apellidos = apellidos;
         this.nacionalidad = nacionalidad;
         this.estado = "ACTIVO";    
-    }
-    
+    }  
+  
     public Autor(String id,String nombres, String apellidos, String nacionalidad,String estado) {
         this.id = id;
         this.nombres = nombres;
@@ -21,7 +21,7 @@ public class Autor {
         this.nacionalidad = nacionalidad;
         this.estado = estado;    
     }
-
+  
     public String getId() {
         return id;
     }
