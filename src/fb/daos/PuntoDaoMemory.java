@@ -146,10 +146,10 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
 
         if (cmp == 0) {
             result.add(lista[mid]);
-            for (int i = mid - 1; i >= 0 && lista[i].getDireccion().equalsIgnoreCase(nombreMinusculas); i--) {
+            for (int i = mid - 1; i >= 0 && (lista[i].getDireccion().contains(nombreMinusculas) || lista[i].getNombre().contains(nombreMinusculas)); i--) {
                 result.add(lista[i]);
             }
-            for (int i = mid + 1; i < getCantidad() && lista[i].getDireccion().equalsIgnoreCase(nombreMinusculas); i++) {
+            for (int i = mid + 1; i < getCantidad() && (lista[i].getDireccion().contains(nombreMinusculas) || lista[i].getNombre().contains(nombreMinusculas)); i++) {
                 result.add(lista[i]);
             }
             return result.toArray(new Punto[0]);
