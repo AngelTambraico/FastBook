@@ -26,8 +26,7 @@ public class AutorDaoMemory implements EntidadService<Autor>{
     private AutorDaoMemory() {
         lista = new Autor[Constantes.CANTIDAD_MEMO];
         indice = -1;
-
-       cargarDatosDesdeCSV("DatadePrueba.csv");
+        cargarDatosDesdeCSV("DatadePrueba.csv");
     }
 
     private void cargarDatosDesdeCSV(String ruta) {
@@ -69,7 +68,7 @@ public class AutorDaoMemory implements EntidadService<Autor>{
         String id;
         if (autor instanceof Autor) {
             indice++;
-            id = "CO" + String.valueOf(indice + 10001).substring(1);
+            id = "AU" + String.valueOf(indice + 10001).substring(1);
             autor.setId(id);
             lista[indice] = autor;
             result = true;

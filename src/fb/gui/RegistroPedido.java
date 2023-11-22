@@ -4,20 +4,74 @@
  */
 package fb.gui;
 
+import fb.dto.PedidoDetalleDTO;
+import fb.model.Libro;
+import fb.util.MultiHelper;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
  * @author USUARIO
  */
 public class RegistroPedido extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form RegistroPedido
-     */
+    
+    List<PedidoDetalleDTO> detalle;
     public RegistroPedido() {
         initComponents();        
+        detalle = new ArrayList<PedidoDetalleDTO>();
+        cargarDetalle();
+    }
+    
+    public void cargarDetalle(){        
+        DefaultTableModel modelo = (DefaultTableModel) tbLibros.getModel();
+        int cantidad = 0;
+        double subtotal = 0;
+        double impuesto = 0;
+        double total = 0;       
+        
+        modelo.setColumnCount(0);
+        modelo.setRowCount(0);
+        modelo.addColumn("Cod. Libro");
+        modelo.addColumn("Título");
+        modelo.addColumn("Autor");
+        modelo.addColumn("Cantidad");
+        modelo.addColumn("Precio");
+        
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        
+        TableColumnModel columnModel=(TableColumnModel)tbLibros.getColumnModel();
+        columnModel.getColumn(3).setCellRenderer(renderer);
+        columnModel.getColumn(4).setCellRenderer(renderer);
+        
+        for (PedidoDetalleDTO dt : detalle) {
+            Object[] fila = new Object[5];
+            fila[0] = dt.getIdLibro();
+            fila[1] = dt.getNomLibro();
+            fila[2] = dt.getAutorLibro();
+            fila[3] = dt.getCantidad();
+            fila[4] = dt.getPrecio();
+            modelo.addRow(fila);
+            cantidad = cantidad + dt.getCantidad();
+            impuesto = impuesto + dt.getImpuesto();
+            total = total + dt.getTotal();
+        }
+        subtotal = MultiHelper.round(total - impuesto,2);
+        
+        lblCantidad.setText(String.valueOf(cantidad));
+        lblSubTotal.setText(String.valueOf(subtotal));
+        lblImpuesto.setText(String.valueOf(impuesto));
+        lblTotal.setText(String.valueOf(total));
     }
 
     /**
@@ -32,7 +86,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         pnlDatosCompra = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtCliente = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnBuscarCliente = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnAgregarLibro = new javax.swing.JButton();
@@ -63,17 +117,32 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         setClosable(true);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        pnlDatosCompra.setPreferredSize(new java.awt.Dimension(300, 582));
+        pnlDatosCompra.setPreferredSize(new java.awt.Dimension(500, 582));
 
         jLabel1.setText("Cliente");
 
-        jButton1.setText("Buscar");
+        btnBuscarCliente.setText("Buscar");
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Libros");
 
         btnAgregarLibro.setText("Agregar");
+        btnAgregarLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarLibroActionPerformed(evt);
+            }
+        });
 
         btnQuitarLibro.setText("Quitar");
+        btnQuitarLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarLibroActionPerformed(evt);
+            }
+        });
 
         tbLibros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -146,12 +215,12 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                             .addGroup(pnlDatosCompraLayout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 382, Short.MAX_VALUE)
                                 .addComponent(btnAgregarLibro)
                                 .addGap(12, 12, 12)))
                         .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnQuitarLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(24, 24, 24))
         );
         pnlDatosCompraLayout.setVerticalGroup(
@@ -166,7 +235,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnBuscarCliente))
                 .addGap(18, 18, 18)
                 .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
@@ -174,7 +243,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                         .addComponent(btnQuitarLibro)
                         .addComponent(btnAgregarLibro)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -227,7 +296,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlParametrosUbicacionLayout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(31, 31, 31)
-                                .addComponent(txtDestino, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE))
+                                .addComponent(txtDestino, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlParametrosUbicacionLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addGap(35, 35, 35)
@@ -263,13 +332,13 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         pnlDatosUbicacion.setLayout(pnlDatosUbicacionLayout);
         pnlDatosUbicacionLayout.setHorizontalGroup(
             pnlDatosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlParametrosUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
+            .addComponent(pnlParametrosUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
         );
         pnlDatosUbicacionLayout.setVerticalGroup(
             pnlDatosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatosUbicacionLayout.createSequentialGroup()
                 .addComponent(pnlParametrosUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(492, Short.MAX_VALUE))
+                .addContainerGap(586, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnlDatosUbicacion);
@@ -277,13 +346,62 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAgregarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLibroActionPerformed
+        try {
+            BusquedaLibro.libroSeleccionado = null;
+            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            BusquedaLibro obj = new BusquedaLibro(topFrame, true);
+            obj.setVisible(true);
+            if(BusquedaLibro.libroSeleccionado != null){
+                int conta=0;
+                for(var x : detalle){
+                    if(x.getIdLibro().equalsIgnoreCase(BusquedaLibro.libroSeleccionado.getIdLibro())){
+                        conta++;
+                        break;
+                    }
+                }
+                if(conta>0){
+                    JOptionPane.showMessageDialog(this, "El libro agregado ya se encuentra agregado");
+                }else{
+                    detalle.add(BusquedaLibro.libroSeleccionado);
+                }
+                
+            }
+            cargarDetalle();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnAgregarLibroActionPerformed
+
+    private void btnQuitarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarLibroActionPerformed
+        try {
+            int fila = tbLibros.getSelectedRow();
+
+            if (fila != -1) {
+                String idLibro = tbLibros.getValueAt(fila, 0).toString();
+                if(!detalle.removeIf(x->x.getIdLibro().equalsIgnoreCase(idLibro))){
+                    JOptionPane.showMessageDialog(this, "Error interno del sistema");
+                }
+                cargarDetalle();
+            } else {
+                JOptionPane.showMessageDialog(this, "No ha seleccionado ninguna fila");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnQuitarLibroActionPerformed
+
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarLibro;
+    private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnBuscarPuntoDestino;
     private javax.swing.JButton btnBuscarPuntoOrigen;
     private javax.swing.JButton btnQuitarLibro;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

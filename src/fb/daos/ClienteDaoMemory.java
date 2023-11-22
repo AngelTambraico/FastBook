@@ -228,9 +228,7 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
     @Override
     public int getCantidad() {
         return indice + 1;
-    }
-
-   
+    }  
 
     
 }

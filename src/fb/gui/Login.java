@@ -74,7 +74,7 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         try{
-            Usuario user = UsuarioDaoFactory.getFabrica().getUsuarioDao(Constantes.ACTUAL).login(txtUsuario.getText(), txtPassword.getText());
+            Usuario user = UsuarioDaoFactory.getFabrica().getUsuarioDao(Constantes.ACTUAL).login(txtUsuario.getText(),String.valueOf(txtPassword.getPassword()) );
             if(user != null){
                 Principal jfPrincipal = new Principal();
                 this.hide();

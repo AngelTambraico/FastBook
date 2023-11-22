@@ -95,7 +95,8 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
         }
         return result.toArray(new Punto[0]);
     }
-
+  
+    @Override
     public void quickSort() {
         quickSort(0, getCantidad() - 1);
     }
@@ -172,5 +173,4 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
     public int getCantidad() {
         return indice + 1;
     }
-  
 }
