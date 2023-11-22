@@ -30,20 +30,25 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
 
         modelo.setColumnCount(0);
         modelo.setRowCount(0);
+        modelo.addColumn("ID");
         modelo.addColumn("Latitud");
         modelo.addColumn("Longitud");
         modelo.addColumn("Distrito");
         modelo.addColumn("Dirección");
         modelo.addColumn("Estado");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Nombre");
 
         for (Punto p : lista) {
-            Object[] fila = new Object[6];
+            Object[] fila = new Object[8];
             fila[0] = p.getId();
             fila[1] = p.getLatitud();
             fila[2] = p.getLongitud();
             fila[3] = p.getDistrito();
-            fila[4] = p.getDireccion();
-            fila[5] = p.getEstado();
+            fila[4] = p.getNombre();
+            fila[5] = p.getDireccion();
+            fila[6] = p.getTipo();
+            fila[7] = p.getEstado();
             modelo.addRow(fila);
         }
     }
@@ -256,20 +261,25 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
 
         modelo.setColumnCount(0);
         modelo.setRowCount(0);
+        modelo.addColumn("ID");
         modelo.addColumn("Latitud");
         modelo.addColumn("Longitud");
         modelo.addColumn("Distrito");
         modelo.addColumn("Dirección");
         modelo.addColumn("Estado");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Nombre");
         
         for (Punto p : resultados) {
-            Object[] fila = new Object[6];
+            Object[] fila = new Object[8];
             fila[0] = p.getId();
             fila[1] = p.getLatitud();
             fila[2] = p.getLongitud();
             fila[3] = p.getDistrito();
-            fila[4] = p.getDireccion();
-            fila[5] = p.getEstado();
+            fila[4] = p.getNombre();
+            fila[5] = p.getDireccion();
+            fila[6] = p.getTipo();
+            fila[7] = p.getEstado();
             modelo.addRow(fila);
         }
     }

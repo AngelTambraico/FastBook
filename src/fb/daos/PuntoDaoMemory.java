@@ -24,7 +24,7 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
         indice = -1;
 
         //Datos de prueba
-        Punto punto1 = new Punto( 1453451, 153834, "Callao", "Av.Quilca 315");
+        Punto punto1 = new Punto( 1453451, 153834, "Callao", "Av.Quilca 315", "Plaza","Libritos de Paco");
         create(punto1);
     }
     
