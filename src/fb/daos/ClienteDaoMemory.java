@@ -99,7 +99,7 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
         String id;
         if (cliente instanceof Cliente) {
             indice++;
-            id = "CL" + String.valueOf(indice + 10000).substring(1);
+            id = "CL" + String.valueOf(indice + 10001).substring(1);
             cliente.setId(id);
             lista[indice] = cliente;
             result = true;
@@ -153,9 +153,12 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
         }
         return result.toArray(new Cliente[0]);
     }
+
+    @Override
     public void quickSort() {
         quickSort(0, getCantidad() - 1);
     }
+
     private void quickSort(int low, int high) {
         if (low < high) {
             int pi = partition(low, high);
@@ -185,46 +188,45 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
 
         return i + 1;
     }
+
     @Override
-        public Cliente[] findByName(String nombre) {
-    quickSort();
-    List<Cliente> result = new ArrayList<>();
-    String nombreMinusculas = nombre.toLowerCase(); 
+    public Cliente[] findByName(String nombre) {
+        quickSort();
+        List<Cliente> result = new ArrayList<>();
+        String nombreMinusculas = nombre.toLowerCase();
 
-    int left = 0;
-    int right = getCantidad() - 1;
+        int left = 0;
+        int right = getCantidad() - 1;
 
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        String nombreEnLista = lista[mid].getNombre().toLowerCase(); 
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            String nombreEnLista = lista[mid].getNombre().toLowerCase();
 
-        int cmp = nombreEnLista.compareTo(nombreMinusculas);
+            int cmp = nombreEnLista.compareTo(nombreMinusculas);
 
-        if (cmp == 0) {
-            result.add(lista[mid]);
-            for (int i = mid - 1; i >= 0 && lista[i].getNombre().equalsIgnoreCase(nombreMinusculas); i--) {
-                result.add(lista[i]);
+            if (cmp == 0) {
+                result.add(lista[mid]);
+                for (int i = mid - 1; i >= 0 && (lista[i].getNombre().contains(nombreMinusculas) || lista[i].getDireccion().contains(nombreMinusculas)); i--) {
+                    result.add(lista[i]);
+                }
+                for (int i = mid + 1; i < getCantidad() && lista[i].getNombre().equalsIgnoreCase(nombreMinusculas); i++) {
+                    result.add(lista[i]);
+                }
+                return result.toArray(new Cliente[0]);
+            } else if (cmp < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
-            for (int i = mid + 1; i < getCantidad() && lista[i].getNombre().equalsIgnoreCase(nombreMinusculas); i++) {
-                result.add(lista[i]);
-            }
-            return result.toArray(new Cliente[0]);
-        } else if (cmp < 0) {
-            left = mid + 1;
-        } else {
-            right = mid - 1;
         }
-    }
 
-    return result.toArray(new Cliente[0]);
-}
+        return result.toArray(new Cliente[0]);
+    }
 
     @Override
     public int getCantidad() {
         return indice + 1;
     }
-
-   
 
     @Override
     public Cliente[] orderByName() {

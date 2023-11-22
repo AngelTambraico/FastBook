@@ -111,4 +111,14 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
     public int getCantidad() {
         return indice + 1;
     }
+
+    @Override
+    public void quickSort() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Punto[] orderByName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

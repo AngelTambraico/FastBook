@@ -4,6 +4,21 @@
  */
 package fb.gui;
 
+import fb.daos.AutorDaoFactory;
+import fb.daos.LibroDaoFactory;
+import fb.dto.PedidoDetalleDTO;
+import fb.model.Libro;
+import fb.util.Constantes;
+import fb.util.MultiHelper;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
 /**
  *
  * @author USUARIO
@@ -13,9 +28,55 @@ public class BusquedaLibro extends javax.swing.JDialog {
     /**
      * Creates new form BusquedaLibro
      */
+    public static PedidoDetalleDTO libroSeleccionado;   
+    public List<PedidoDetalleDTO> librosFiltrados; 
     public BusquedaLibro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
+        cargarData();
+    }
+    
+    public void cargarData(){
+        var lista = LibroDaoFactory.getFabrica().getLibroDao(Constantes.ACTUAL).findByName(txtFiltro.getText());
+        librosFiltrados = new ArrayList<PedidoDetalleDTO>();
+        
+        for (var item : lista) {
+            PedidoDetalleDTO detalle = new PedidoDetalleDTO(
+                    item.getId(),
+                     item.getTitulo(),
+                     AutorDaoFactory.getFabrica().getAutorDao(Constantes.ACTUAL).findById(item.getIdAutor()).getNombreCompleto(),
+                     item.getPrecio(),
+                     1,
+                     MultiHelper.round(item.getPrecio() - (item.getPrecio() / (1 + Constantes.IGV)),2),
+                     item.getPrecio()
+            );
+            librosFiltrados.add(detalle);
+        }
+        
+        DefaultTableModel modelo = (DefaultTableModel) tbLibros.getModel();
+        
+        modelo.setColumnCount(0);
+        modelo.setRowCount(0);
+        modelo.addColumn("Cod. Libro");
+        modelo.addColumn("Título");
+        modelo.addColumn("Autor");        
+        modelo.addColumn("Precio");     
+        
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        
+        TableColumnModel columnModel=(TableColumnModel)tbLibros.getColumnModel();
+        columnModel.getColumn(3).setCellRenderer(renderer); 
+
+        for (PedidoDetalleDTO dt : librosFiltrados) {
+            Object[] fila = new Object[4];
+            fila[0] = dt.getIdLibro();
+            fila[1] = dt.getNomLibro();
+            fila[2] = dt.getAutorLibro();            
+            fila[3] = dt.getPrecio();
+            modelo.addRow(fila);
+        }
     }
 
     /**
@@ -27,21 +88,108 @@ public class BusquedaLibro extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        txtFiltro = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbLibros = new javax.swing.JTable();
+        btnSeleccionar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel1.setText("Búsqueda de Libros");
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        tbLibros.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tbLibros);
+
+        btnSeleccionar.setText("Agregar");
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSeleccionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtFiltro)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscar)))
+                .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSeleccionar)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try{
+            cargarData();
+        }catch (Exception ex) {
+             JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+        try {
+            int fila = tbLibros.getSelectedRow();
+
+            if (fila != -1) {
+                for(var item :librosFiltrados){
+                    if(item.getIdLibro().equalsIgnoreCase(tbLibros.getValueAt(fila, 0).toString())){
+                        libroSeleccionado = item;
+                        break;
+                    }
+                }
+                this.hide();
+            } else {
+                JOptionPane.showMessageDialog(this, "No ha seleccionado ninguna fila");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -86,5 +234,11 @@ public class BusquedaLibro extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnSeleccionar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbLibros;
+    private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }

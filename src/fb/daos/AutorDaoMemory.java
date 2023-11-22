@@ -29,7 +29,13 @@ public class AutorDaoMemory implements EntidadService<Autor>{
                 "Garcia Chamorro",
                 "Peruana"
         );
+        Autor autorPrueba2 = new Autor(
+                "Pedro",
+                "Fernandez Rosales",
+                "Peruana"
+        );
         create(autorPrueba);
+        create(autorPrueba2);
     }
 
     public static AutorDaoMemory getInstancia() {
@@ -45,7 +51,7 @@ public class AutorDaoMemory implements EntidadService<Autor>{
         String id;
         if (autor instanceof Autor) {
             indice++;
-            id = "CO" + String.valueOf(indice + 10001).substring(1);
+            id = "AU" + String.valueOf(indice + 10001).substring(1);
             autor.setId(id);
             lista[indice] = autor;
             result = true;
@@ -170,5 +176,21 @@ public class AutorDaoMemory implements EntidadService<Autor>{
         lista[high] = temp;
 
         return i + 1;
+    }
+
+    @Override
+    public Autor[] orderByName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public boolean createFromFile(Autor autor) {
+        boolean result = false;
+        String id;
+        if (autor instanceof Autor) {
+            indice++;            
+            lista[indice] = autor;
+            result = true;
+        }
+        return result;
     }
 }

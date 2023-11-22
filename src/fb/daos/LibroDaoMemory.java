@@ -24,8 +24,14 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         indice = -1;
 
         //Datos de prueba
-        //Libro libro1 = new Libro( "J.R.R. Tolkien", "El señor de los anillos", 29.99, 30, "En oferta");
-        //create(libro1);
+        Libro libro1 = new Libro("AU0001", "El señor de los anillos2", 29.99, 10);
+        Libro libro2 = new Libro("AU0001", "Hamlet", 50, 30);
+        Libro libro3 = new Libro("AU0001", "Casa Blanca", 35, 20);
+        Libro libro4 = new Libro("AU0002", "El infinito", 140, 48);
+        create(libro1);
+        create(libro2);
+        create(libro3);
+        create(libro4);
     }
 
     public static LibroDaoMemory getInstancia() {
@@ -41,7 +47,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         String id;
         if (libro instanceof Libro) {
             indice++;
-            id = "L" + String.valueOf(indice + 10000).substring(1);
+            id = "LI" + String.valueOf(indice + 10001).substring(1);
             libro.setId(id);
             lista[indice] = libro;
             result = true;
@@ -98,35 +104,40 @@ public class LibroDaoMemory implements EntidadService<Libro>{
     @Override
     public Libro[] findByName(String title) {
         quickSort();
-        List<Libro> result = new ArrayList<>();
-        String nombreMinusculas = title.toLowerCase(); 
+        
+        if (!title.isEmpty()) {
+            List<Libro> result = new ArrayList<>();
+            String nombreMinusculas = title.toLowerCase();
 
-        int left = 0;
-        int right = getCantidad() - 1;
+            int left = 0;
+            int right = getCantidad() - 1;
 
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            String nombreEnLista = lista[mid].getTitulo().toLowerCase(); 
+            while (left <= right) {
+                int mid = left + (right - left) / 2;
+                String nombreEnLista = lista[mid].getTitulo().toLowerCase();
 
-            int cmp = nombreEnLista.compareTo(nombreMinusculas);
+                int cmp = nombreEnLista.compareTo(nombreMinusculas);
 
-            if (cmp == 0) {
-                result.add(lista[mid]);
-                for (int i = mid - 1; i >= 0 && lista[i].getTitulo().equalsIgnoreCase(nombreMinusculas); i--) {
-                    result.add(lista[i]);
+                if (cmp == 0) {
+                    result.add(lista[mid]);
+                    for (int i = mid - 1; i >= 0 && lista[i].getTitulo().equalsIgnoreCase(nombreMinusculas); i--) {
+                        result.add(lista[i]);
+                    }
+                    for (int i = mid + 1; i < getCantidad() && lista[i].getTitulo().equalsIgnoreCase(nombreMinusculas); i++) {
+                        result.add(lista[i]);
+                    }
+                    return result.toArray(new Libro[0]);
+                } else if (cmp < 0) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
                 }
-                for (int i = mid + 1; i < getCantidad() && lista[i].getTitulo().equalsIgnoreCase(nombreMinusculas); i++) {
-                    result.add(lista[i]);
-                }
-                return result.toArray(new Libro[0]);
-            } else if (cmp < 0) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
             }
+            return result.toArray(new Libro[0]);
         }
-
-        return result.toArray(new Libro[0]);
+        else    {
+            return findAll();
+        }
     }
 
     @Override
@@ -167,5 +178,10 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         lista[high] = temp;
 
         return i + 1;
+    }
+
+    @Override
+    public Libro[] orderByName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
