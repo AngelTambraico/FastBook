@@ -24,8 +24,8 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
         indice = -1;
 
         //Datos de prueba
-        //Punto punto1 = new Punto( "666", "666", callao, Av. Quilca 315, "En alcance");
-        //create(libro1);
+        Punto punto1 = new Punto( 1453451, 153834, "Callao", "Av.Quilca 315", "Plaza","Libritos de Paco");
+        create(punto1);
     }
     
     static EntidadService<Punto> getInstancia() {
@@ -96,7 +96,6 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
         return result.toArray(new Punto[0]);
     }
 
-    @Override
     public void quickSort() {
         quickSort(0, getCantidad() - 1);
     }
@@ -133,23 +132,23 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
     public Punto[] findByName(String direccion) {
     quickSort();
     List<Punto> result = new ArrayList<>();
-    String nombreMinusculas = direccion.toLowerCase(); 
-
+    String direccionMinusculas = direccion.toLowerCase(); 
     int left = 0;
     int right = getCantidad() - 1;
-
     while (left <= right) {
         int mid = left + (right - left) / 2;
-        String nombreEnLista = lista[mid].getDireccion().toLowerCase(); 
+        String direccionEnLista = lista[mid].getDireccion().toLowerCase(); 
 
-        int cmp = nombreEnLista.compareTo(nombreMinusculas);
+        int cmp = direccionEnLista.compareTo(direccionMinusculas);
 
         if (cmp == 0) {
             result.add(lista[mid]);
-            for (int i = mid - 1; i >= 0 && lista[i].getDireccion().equalsIgnoreCase(nombreMinusculas); i--) {
+            // Buscar hacia atrás
+            for (int i = mid - 1; i >= 0 && lista[i].getDireccion().toLowerCase().contains(direccionMinusculas); i--) {
                 result.add(lista[i]);
             }
-            for (int i = mid + 1; i < getCantidad() && lista[i].getDireccion().equalsIgnoreCase(nombreMinusculas); i++) {
+            // Buscar hacia adelante
+            for (int i = mid + 1; i < getCantidad() && lista[i].getDireccion().toLowerCase().contains(direccionMinusculas); i++) {
                 result.add(lista[i]);
             }
             return result.toArray(new Punto[0]);
@@ -157,6 +156,12 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
             left = mid + 1;
         } else {
             right = mid - 1;
+        }
+    }
+    for (int i = 0; i < getCantidad(); i++) {
+        String direccionEnLista = lista[i].getDireccion().toLowerCase();
+        if (direccionEnLista.contains(direccionMinusculas)) {
+            result.add(lista[i]);
         }
     }
 

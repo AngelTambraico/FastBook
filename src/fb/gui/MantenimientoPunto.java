@@ -30,20 +30,25 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
 
         modelo.setColumnCount(0);
         modelo.setRowCount(0);
+        modelo.addColumn("ID");
         modelo.addColumn("Latitud");
         modelo.addColumn("Longitud");
         modelo.addColumn("Distrito");
         modelo.addColumn("Dirección");
         modelo.addColumn("Estado");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Nombre");
 
         for (Punto p : lista) {
-            Object[] fila = new Object[6];
+            Object[] fila = new Object[8];
             fila[0] = p.getId();
             fila[1] = p.getLatitud();
             fila[2] = p.getLongitud();
             fila[3] = p.getDistrito();
-            fila[4] = p.getDireccion();
-            fila[5] = p.getEstado();
+            fila[4] = p.getNombre();
+            fila[5] = p.getDireccion();
+            fila[6] = p.getTipo();
+            fila[7] = p.getEstado();
             modelo.addRow(fila);
         }
     }
@@ -67,6 +72,10 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
         BtnBuscar = new javax.swing.JButton();
         BtnOrdenar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Puntos");
 
         tbPuntos.setModel(new javax.swing.table.DefaultTableModel(
@@ -115,7 +124,7 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
             }
         });
 
-        BtnOrdenar.setText("Ordenar");
+        BtnOrdenar.setText("Ordenar por dirección");
         BtnOrdenar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnOrdenarActionPerformed(evt);
@@ -145,9 +154,9 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnOrdenar)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,20 +261,25 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
 
         modelo.setColumnCount(0);
         modelo.setRowCount(0);
+        modelo.addColumn("ID");
         modelo.addColumn("Latitud");
         modelo.addColumn("Longitud");
         modelo.addColumn("Distrito");
         modelo.addColumn("Dirección");
         modelo.addColumn("Estado");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Nombre");
         
         for (Punto p : resultados) {
-            Object[] fila = new Object[6];
+            Object[] fila = new Object[8];
             fila[0] = p.getId();
             fila[1] = p.getLatitud();
             fila[2] = p.getLongitud();
             fila[3] = p.getDistrito();
-            fila[4] = p.getDireccion();
-            fila[5] = p.getEstado();
+            fila[4] = p.getNombre();
+            fila[5] = p.getDireccion();
+            fila[6] = p.getTipo();
+            fila[7] = p.getEstado();
             modelo.addRow(fila);
         }
     }
