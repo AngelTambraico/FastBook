@@ -7,6 +7,9 @@ package fb.daos;
 import fb.model.Punto;
 import fb.service.EntidadService;
 import fb.util.Constantes;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -23,11 +26,37 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
         lista = new Punto[Constantes.CANTIDAD_MEMO];
         indice = -1;
 
-        //Datos de prueba
-        Punto punto1 = new Punto( 1453451, 153834, "Callao", "Av.Quilca 315", "Plaza","Libritos de Paco");
-        create(punto1);
+        cargarDatosDesdeCSV("Datos-Ubi.csv");
     }
-    
+
+   private void cargarDatosDesdeCSV(String ruta) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(ruta))) {
+        String linea;
+        while ((linea = reader.readLine()) != null) {
+            String[] campos = linea.split(",");
+            if (campos.length == 8) {
+                String id = campos[0].trim();
+                double latitud = Double.parseDouble(campos[1].trim());
+                double longitud = Double.parseDouble(campos[2].trim());
+                String distrito = campos[3].trim();
+                String nombre = campos[4].trim();
+                String direccion = campos[5].trim();
+                String tipo = campos[6].trim();
+                String estado = campos[7].trim();
+
+                Punto punto = new Punto(latitud, longitud, distrito, nombre, direccion, tipo);
+                punto.setId(id);
+                punto.setEstado(estado);
+                createFromFile(punto);
+            } else {
+                System.err.println("Formato de línea incorrecto en el archivo CSV.");
+            }
+        }
+    } catch (IOException | NumberFormatException e) {
+        e.printStackTrace();
+    }
+}
+
     static EntidadService<Punto> getInstancia() {
          if (instancia == null) {
             instancia = new PuntoDaoMemory();
@@ -74,7 +103,16 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
         }
         return result;
     }
-
+    public boolean createFromFile(Punto punto) {
+        boolean result = false;
+        String id;
+        if (punto instanceof Punto) {
+            indice++;            
+            lista[indice] = punto;
+            result = true;
+        }
+        return result;
+    }
     @Override
     public Punto findById(String id) {
         Punto result = null;
