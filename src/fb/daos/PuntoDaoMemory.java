@@ -26,36 +26,35 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
         lista = new Punto[Constantes.CANTIDAD_MEMO];
         indice = -1;
 
-        cargarDatosDesdeCSV("Datos-Ubi.csv");
+        cargarDatosDesdeCSV("PuntosUbicacion.csv");
     }
 
-   private void cargarDatosDesdeCSV(String ruta) {
-    try (BufferedReader reader = new BufferedReader(new FileReader(ruta))) {
-        String linea;
-        while ((linea = reader.readLine()) != null) {
-            String[] campos = linea.split(",");
-            if (campos.length == 8) {
-                String id = campos[0].trim();
-                double latitud = Double.parseDouble(campos[1].trim());
-                double longitud = Double.parseDouble(campos[2].trim());
-                String distrito = campos[3].trim();
-                String nombre = campos[4].trim();
-                String direccion = campos[5].trim();
-                String tipo = campos[6].trim();
-                String estado = campos[7].trim();
-
-                Punto punto = new Punto(latitud, longitud, distrito, nombre, direccion, tipo);
-                punto.setId(id);
-                punto.setEstado(estado);
-                createFromFile(punto);
-            } else {
-                System.err.println("Formato de línea incorrecto en el archivo CSV.");
+    private void cargarDatosDesdeCSV(String ruta) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(ruta))) {
+            String linea;
+            reader.readLine();
+            while ((linea = reader.readLine()) != null) {
+                String[] campos = linea.split(";");
+                if (campos.length == 8) {
+                    Punto punto = new Punto(
+                            campos[0].trim(),
+                            Double.parseDouble(campos[1].trim()),
+                            Double.parseDouble(campos[2].trim()),
+                            campos[3].trim(),
+                            campos[4].trim(),
+                            campos[5].trim(),
+                            campos[6].trim(),
+                            campos[7].trim()
+                    );
+                    createFromFile(punto);
+                } else {
+                    System.err.println("Formato de línea incorrecto en el archivo CSV.");
+                }
             }
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
         }
-    } catch (IOException | NumberFormatException e) {
-        e.printStackTrace();
     }
-}
 
     static EntidadService<Punto> getInstancia() {
          if (instancia == null) {

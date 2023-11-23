@@ -30,24 +30,25 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
 
         modelo.setColumnCount(0);
         modelo.setRowCount(0);
+        
         modelo.addColumn("ID");
-        modelo.addColumn("Latitud");
-        modelo.addColumn("Longitud");
+        modelo.addColumn("Nombre");
         modelo.addColumn("Distrito");
         modelo.addColumn("Dirección");
-        modelo.addColumn("Estado");
         modelo.addColumn("Tipo");
-        modelo.addColumn("Nombre");
+        modelo.addColumn("Latitud");
+        modelo.addColumn("Longitud");
+        modelo.addColumn("Estado");
 
         for (Punto p : lista) {
             Object[] fila = new Object[8];
             fila[0] = p.getId();
-            fila[1] = p.getLatitud();
-            fila[2] = p.getLongitud();
-            fila[3] = p.getDistrito();
-            fila[4] = p.getNombre();
-            fila[5] = p.getDireccion();
-            fila[6] = p.getTipo();
+            fila[1] = p.getNombre();
+            fila[2] = p.getDistrito();            
+            fila[3] = p.getDireccion();
+            fila[4] = p.getTipo();
+            fila[5] = p.getLatitud();
+            fila[6] = p.getLongitud();
             fila[7] = p.getEstado();
             modelo.addRow(fila);
         }
@@ -147,16 +148,16 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar)))
                 .addGap(12, 12, 12))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 319, Short.MAX_VALUE)
                 .addComponent(BtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnOrdenar)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,8 +168,8 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
                     .addComponent(txtNombre)
                     .addComponent(BtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BtnOrdenar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,9 +183,9 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
-            FormularioCliente.codigo="";
+            FormularioPunto.codigo="";
             JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            FormularioCliente obj = new FormularioCliente(topFrame, true);
+            FormularioPunto obj = new FormularioPunto(topFrame, true);
             obj.setVisible(true);
             cargarDatos();
         } catch (Exception ex) {
@@ -197,9 +198,9 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
             int fila = tbPuntos.getSelectedRow();
 
             if (fila != -1) {
-                FormularioCliente.codigo = tbPuntos.getValueAt(fila, 0).toString();
+                FormularioPunto.codigo = tbPuntos.getValueAt(fila, 0).toString();
                 JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                FormularioCliente obj = new FormularioCliente(topFrame, true);
+                FormularioPunto obj = new FormularioPunto(topFrame, true);
                 obj.setVisible(true);
                 cargarDatos();
             } else {

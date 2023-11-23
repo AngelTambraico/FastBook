@@ -17,7 +17,8 @@ import java.util.List;
  *
  * @author USUARIO
  */
-public class AutorDaoMemory implements EntidadService<Autor>{  
+public class AutorDaoMemory implements EntidadService<Autor> {
+
     private Autor[] lista;
     private int indice;
 
@@ -26,34 +27,35 @@ public class AutorDaoMemory implements EntidadService<Autor>{
     private AutorDaoMemory() {
         lista = new Autor[Constantes.CANTIDAD_MEMO];
         indice = -1;
-        cargarDatosDesdeCSV("DatadePrueba.csv");
+        cargarDatosDesdeCSV("Autores.csv");
     }
 
     private void cargarDatosDesdeCSV(String ruta) {
-    try (BufferedReader reader = new BufferedReader(new FileReader(ruta))) {
-        String linea;
-        while ((linea = reader.readLine()) != null) {
-            String[] campos = linea.split(",");
-            if (campos.length == 5) {
-                String id = campos[0].trim();
-                String nombres = campos[1].trim();
-                String apellidos = campos[2].trim();
-                String nacionalidad = campos[3].trim();
-                String estado = campos[4].trim();
+        try (BufferedReader reader = new BufferedReader(new FileReader(ruta))) {
+            String linea;
+            reader.readLine();
+            while ((linea = reader.readLine()) != null) {
+                String[] campos = linea.split(";");
+                if (campos.length == 5) {
 
-                Autor autor = new Autor(nombres, apellidos, nacionalidad);
-                autor.setId(id);
-                autor.setEstado(estado);
+                    Autor autor = new Autor(
+                            campos[0].trim(),
+                            campos[1].trim(),
+                            campos[2].trim(),
+                            campos[3].trim(),
+                            campos[4].trim()
+                    );
 
-                createFromFile(autor);
-            } else {
-                System.err.println("Formato de línea incorrecto en el archivo CSV.");
+                    createFromFile(autor);
+                } else {
+                    System.err.println("Formato de línea incorrecto en el archivo CSV.");
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
     }
-}
+
     public static AutorDaoMemory getInstancia() {
         if (instancia == null) {
             instancia = new AutorDaoMemory();
@@ -100,11 +102,12 @@ public class AutorDaoMemory implements EntidadService<Autor>{
         }
         return result;
     }
+
     public boolean createFromFile(Autor autor) {
         boolean result = false;
         String id;
         if (autor instanceof Autor) {
-            indice++;            
+            indice++;
             lista[indice] = autor;
             result = true;
         }
@@ -122,6 +125,7 @@ public class AutorDaoMemory implements EntidadService<Autor>{
         }
         return result;
     }
+
     @Override
     public Autor[] findAll() {
         List<Autor> result = new ArrayList<>();
@@ -135,14 +139,14 @@ public class AutorDaoMemory implements EntidadService<Autor>{
     public Autor[] findByName(String name) {
         quickSort();
         List<Autor> result = new ArrayList<>();
-        String nombreMinusculas = name.toLowerCase(); 
+        String nombreMinusculas = name.toLowerCase();
 
         int left = 0;
         int right = getCantidad() - 1;
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            String nombreEnLista = lista[mid].getNombres().toLowerCase(); 
+            String nombreEnLista = lista[mid].getNombres().toLowerCase();
 
             int cmp = nombreEnLista.compareTo(nombreMinusculas);
 
@@ -174,6 +178,7 @@ public class AutorDaoMemory implements EntidadService<Autor>{
     public void quickSort() {
         quickSort(0, getCantidad() - 1);
     }
+
     private void quickSort(int low, int high) {
         if (low < high) {
             int pi = partition(low, high);
@@ -182,6 +187,7 @@ public class AutorDaoMemory implements EntidadService<Autor>{
             quickSort(pi + 1, high);
         }
     }
+
     private int partition(int low, int high) {
         Autor pivot = lista[high];
         int i = low - 1;
