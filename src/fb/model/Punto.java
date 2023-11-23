@@ -19,7 +19,16 @@ public class Punto {
         this.tipo = tipo;
         this.estado = "ACTIVO";
     }
-
+    public Punto(double latitud, double longitud, String distrito, String nombre, String direccion, String tipo) {
+        this.id=id;
+        this.latitud = (float) latitud;
+        this.longitud = (float) longitud;
+        this.distrito = distrito;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.tipo = tipo;
+        this.estado = estado;
+    }
     public String getId() {
         return id;
     }
