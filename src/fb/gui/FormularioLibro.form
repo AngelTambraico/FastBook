@@ -45,11 +45,11 @@
                           <Component id="txtStock" alignment="0" min="-2" pref="173" max="-2" attributes="0"/>
                           <Component id="txtTitulo" alignment="1" min="-2" pref="173" max="-2" attributes="0"/>
                           <Component id="txtPrecio" alignment="1" min="-2" pref="173" max="-2" attributes="0"/>
-                          <Component id="txtAutor" alignment="1" min="-2" pref="173" max="-2" attributes="0"/>
+                          <Component id="txtIDAutor" alignment="1" min="-2" pref="173" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="105" max="32767" attributes="0"/>
+              <EmptySpace pref="94" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -59,7 +59,7 @@
               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblAutor" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtAutor" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtIDAutor" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -97,10 +97,10 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lblAutor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Autor"/>
+        <Property name="text" type="java.lang.String" value="ID Autor"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtAutor">
+    <Component class="javax.swing.JTextField" name="txtIDAutor">
     </Component>
     <Component class="javax.swing.JLabel" name="lblPrecio">
       <Properties>
