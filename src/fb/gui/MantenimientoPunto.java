@@ -33,11 +33,11 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
         modelo.addColumn("ID");
         modelo.addColumn("Latitud");
         modelo.addColumn("Longitud");
-        modelo.addColumn("Distrito");
-        modelo.addColumn("Dirección");
-        modelo.addColumn("Estado");
-        modelo.addColumn("Tipo");
+        modelo.addColumn("Distrito");                    
         modelo.addColumn("Nombre");
+        modelo.addColumn("Dirección");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Estado");
 
         for (Punto p : lista) {
             Object[] fila = new Object[8];
@@ -182,9 +182,9 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
-            FormularioCliente.codigo="";
+            FormularioPunto.codigo="";
             JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            FormularioCliente obj = new FormularioCliente(topFrame, true);
+            FormularioPunto obj = new FormularioPunto(topFrame, true);
             obj.setVisible(true);
             cargarDatos();
         } catch (Exception ex) {
@@ -197,9 +197,9 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
             int fila = tbPuntos.getSelectedRow();
 
             if (fila != -1) {
-                FormularioCliente.codigo = tbPuntos.getValueAt(fila, 0).toString();
+                FormularioPunto.codigo = tbPuntos.getValueAt(fila, 0).toString();
                 JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                FormularioCliente obj = new FormularioCliente(topFrame, true);
+                FormularioPunto obj = new FormularioPunto(topFrame, true);
                 obj.setVisible(true);
                 cargarDatos();
             } else {
@@ -265,10 +265,10 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
         modelo.addColumn("Latitud");
         modelo.addColumn("Longitud");
         modelo.addColumn("Distrito");
-        modelo.addColumn("Dirección");
-        modelo.addColumn("Estado");
-        modelo.addColumn("Tipo");
         modelo.addColumn("Nombre");
+        modelo.addColumn("Dirección");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Estado");
         
         for (Punto p : resultados) {
             Object[] fila = new Object[8];
