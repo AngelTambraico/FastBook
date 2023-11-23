@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -139,40 +140,48 @@ public class LibroDaoMemory implements EntidadService<Libro>{
     @Override
     public Libro[] findByName(String title) {
         quickSort();
-        
-        if (!title.isEmpty()) {
-            List<Libro> result = new ArrayList<>();
-            String nombreMinusculas = title.toLowerCase();
+        List<Libro> result = new ArrayList<>();
+        String nombreMinusculas = normalizarTexto(title).toLowerCase(); // Normalizar texto
+        int left = 0;
+        int right = getCantidad() - 1;
 
-            int left = 0;
-            int right = getCantidad() - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            String nombresEnLista = normalizarTexto(lista[mid].getTitulo()).toLowerCase(); // Normalizar texto
 
-            while (left <= right) {
-                int mid = left + (right - left) / 2;
-                String nombreEnLista = lista[mid].getTitulo().toLowerCase();
+            int cmp = nombresEnLista.compareTo(nombreMinusculas);
 
-                int cmp = nombreEnLista.compareTo(nombreMinusculas);
-
-                if (cmp == 0) {
-                    result.add(lista[mid]);
-                    for (int i = mid - 1; i >= 0 && lista[i].getTitulo().equalsIgnoreCase(nombreMinusculas); i--) {
-                        result.add(lista[i]);
-                    }
-                    for (int i = mid + 1; i < getCantidad() && lista[i].getTitulo().equalsIgnoreCase(nombreMinusculas); i++) {
-                        result.add(lista[i]);
-                    }
-                    return result.toArray(new Libro[0]);
-                } else if (cmp < 0) {
-                    left = mid + 1;
-                } else {
-                    right = mid - 1;
+            if (cmp == 0) {
+                result.add(lista[mid]);
+                // Buscar hacia atrás
+                for (int i = mid - 1; i >= 0 && normalizarTexto(lista[i].getTitulo()).toLowerCase().contains(nombreMinusculas); i--) {
+                    result.add(lista[i]);
                 }
+                // Buscar hacia adelante
+                for (int i = mid + 1; i < getCantidad() && normalizarTexto(lista[i].getTitulo()).toLowerCase().contains(nombreMinusculas); i++) {
+                    result.add(lista[i]);
+                }
+                return result.toArray(new Libro[0]);
+            } else if (cmp < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
-            return result.toArray(new Libro[0]);
         }
-        else    {
-            return findAll();
+
+        for (int i = 0; i < getCantidad(); i++) {
+            String nombreEnLista = normalizarTexto(lista[i].getTitulo()).toLowerCase(); // Normalizar texto
+            if (nombreEnLista.contains(nombreMinusculas)) {
+                result.add(lista[i]);
+            }
         }
+
+        return result.toArray(new Libro[0]);
+    }
+    
+    private String normalizarTexto(String texto) {
+    return Normalizer.normalize(texto, Normalizer.Form.NFD)
+            .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
     @Override
@@ -199,7 +208,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
-            if (lista[j].getTitulo().compareTo(pivot.getTitulo()) < 0) {
+            if (compararConNormalizacion(lista[j].getTitulo(), pivot.getTitulo()) < 0) {
                 i++;
 
                 Libro temp = lista[i];
@@ -214,6 +223,11 @@ public class LibroDaoMemory implements EntidadService<Libro>{
 
         return i + 1;
     }
-
+    
+    private int compararConNormalizacion(String str1, String str2) {
+        String str1Normalized = normalizarTexto(str1);
+        String str2Normalized = normalizarTexto(str2);
+        return str1Normalized.compareTo(str2Normalized);
+    }
     
 }
