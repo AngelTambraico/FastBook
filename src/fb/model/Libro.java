@@ -15,6 +15,14 @@ public class Libro {
         this.stock = stock;
         this.estado = "ACTIVO";
     }
+    public Libro(String id,String idAutor, String titulo, double precio, int stock) {
+        this.id=id;
+        this.idAutor = idAutor;
+        this.titulo = titulo;
+        this.precio = precio;
+        this.stock = stock;
+        this.estado = "ACTIVO";
+    }
     
     public String getId() {
         return id;
