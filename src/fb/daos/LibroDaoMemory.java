@@ -4,9 +4,15 @@
  */
 package fb.daos;
 
+
 import fb.model.Libro;
 import fb.service.EntidadService;
 import fb.util.Constantes;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -23,16 +29,36 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         lista = new Libro[Constantes.CANTIDAD_MEMO];
         indice = -1;
 
-        //Datos de prueba
-        Libro libro1 = new Libro("AU0001", "El señor de los anillos2", 29.99, 10);
-        Libro libro2 = new Libro("AU0001", "Hamlet", 50, 30);
-        Libro libro3 = new Libro("AU0001", "Casa Blanca", 35, 20);
-        Libro libro4 = new Libro("AU0002", "El infinito", 140, 48);
-        create(libro1);
-        create(libro2);
-        create(libro3);
-        create(libro4);
+         cargarDatosDesdeCSV("Datos-Libros.csv");
     }
+    private void cargarDatosDesdeCSV(String ruta) {
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(ruta), StandardCharsets.UTF_8))) {
+        String linea;
+        reader.readLine();
+        while ((linea = reader.readLine()) != null) {
+            String[] campos = linea.split(",");
+            if (campos.length == 5) { 
+                double precio = Double.parseDouble(campos[3].trim());
+                int stock = Integer.parseInt(campos[4].trim());
+
+                Libro libro = new Libro(
+                        campos[0].trim(),
+                        campos[1].trim(),
+                        campos[2].trim(),
+                        precio,
+                        stock
+                );
+                createFromFile(libro);
+            } else {
+                System.err.println("Formato de línea incorrecto en el archivo CSV.");
+            }
+        }
+    } catch (IOException | NumberFormatException e) {
+        e.printStackTrace();
+    }
+}
+
+    
 
     public static LibroDaoMemory getInstancia() {
         if (instancia == null) {
@@ -79,7 +105,16 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         }
         return result;
     }
-
+        public boolean createFromFile(Libro libro) {
+        boolean result = false;
+        String id;
+        if (libro instanceof Libro) {
+            indice++;
+            lista[indice] = libro;
+            result = true;
+        }
+        return result;
+    }
     @Override
     public Libro findById(String id) {
         Libro result = null;
