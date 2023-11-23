@@ -45,7 +45,6 @@ public class AutorDaoMemory implements EntidadService<Autor>{
                 autor.setId(id);
                 autor.setEstado(estado);
 
-                // Utiliza el método createFromFile en lugar de create
                 createFromFile(autor);
             } else {
                 System.err.println("Formato de línea incorrecto en el archivo CSV.");
