@@ -7,6 +7,7 @@ package fb.gui;
 import fb.daos.UsuarioDaoFactory;
 import fb.model.Usuario;
 import fb.util.Constantes;
+import fb.util.Session;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -76,6 +77,7 @@ public class Login extends javax.swing.JFrame {
         try{
             Usuario user = UsuarioDaoFactory.getFabrica().getUsuarioDao(Constantes.ACTUAL).login(txtUsuario.getText(),String.valueOf(txtPassword.getPassword()) );
             if(user != null){
+                Session.UsuarioActual = user;
                 Principal jfPrincipal = new Principal();
                 this.hide();
                 jfPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);

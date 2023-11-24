@@ -73,5 +73,9 @@ public class Colaborador {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+    
+    public String getNombreCompleto(){
+        return this.nombres+" "+this.apePaterno+" "+this.apeMaterno;
+    }
 
 }

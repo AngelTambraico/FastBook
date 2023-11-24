@@ -8,6 +8,8 @@ import fb.dto.PedidoDetalleDTO;
 import fb.model.Libro;
 import fb.util.MultiHelper;
 import java.awt.Image;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -25,10 +27,19 @@ import javax.swing.table.TableColumnModel;
  */
 public class RegistroPedido extends javax.swing.JInternalFrame {
     
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     List<PedidoDetalleDTO> detalle;
     public RegistroPedido() {
         initComponents();        
+        lblIdCliente.setVisible(false);
+        txtCliente.setEditable(false);
+        lblIdOrigen.setVisible(false);
+        txtOrigen.setEditable(false);
+        lblIdDestino.setVisible(false);
+        txtDestino.setEditable(false);
         detalle = new ArrayList<PedidoDetalleDTO>();
+        
+        df.setRoundingMode(RoundingMode.HALF_UP);
         cargarDetalle();
     }
     
@@ -69,9 +80,9 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         subtotal = MultiHelper.round(total - impuesto,2);
         
         lblCantidad.setText(String.valueOf(cantidad));
-        lblSubTotal.setText(String.valueOf(subtotal));
-        lblImpuesto.setText(String.valueOf(impuesto));
-        lblTotal.setText(String.valueOf(total));
+        lblSubTotal.setText(df.format(subtotal));
+        lblImpuesto.setText(df.format(impuesto));
+        lblTotal.setText(df.format(total));
     }
 
     /**
@@ -87,7 +98,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtCliente = new javax.swing.JTextField();
         btnBuscarCliente = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblIdCliente = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnAgregarLibro = new javax.swing.JButton();
         btnQuitarLibro = new javax.swing.JButton();
@@ -157,6 +168,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tbLibros);
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setText("NUEVA COMPRA");
 
         jLabel5.setText("Cantidad");
@@ -174,8 +186,10 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         lblImpuesto.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblImpuesto.setText("lblImpuesto");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setText("Total");
 
+        lblTotal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTotal.setText("lblTotal");
 
@@ -190,16 +204,11 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                         .addComponent(jLabel8)
                         .addGap(84, 84, 84)
                         .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel4)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosCompraLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(60, 60, 60)
                         .addComponent(lblImpuesto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlDatosCompraLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel2))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosCompraLayout.createSequentialGroup()
                         .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -215,12 +224,20 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                             .addGroup(pnlDatosCompraLayout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 382, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
                                 .addComponent(btnAgregarLibro)
                                 .addGap(12, 12, 12)))
                         .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnQuitarLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(pnlDatosCompraLayout.createSequentialGroup()
+                        .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addGroup(pnlDatosCompraLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(24, 24, 24))
         );
         pnlDatosCompraLayout.setVerticalGroup(
@@ -228,10 +245,10 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
             .addGroup(pnlDatosCompraLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel4)
-                .addGap(33, 33, 33)
-                .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(28, 28, 28)
+                .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(lblIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,7 +260,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                         .addComponent(btnQuitarLibro)
                         .addComponent(btnAgregarLibro)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -267,6 +284,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
 
         pnlParametrosUbicacion.setPreferredSize(new java.awt.Dimension(596, 180));
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("DELIVERY");
 
         jLabel10.setText("Ubicación Origen");
@@ -274,8 +292,18 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         jLabel11.setText("Ubicación Destino");
 
         btnBuscarPuntoOrigen.setText("Buscar");
+        btnBuscarPuntoOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPuntoOrigenActionPerformed(evt);
+            }
+        });
 
         btnBuscarPuntoDestino.setText("Buscar");
+        btnBuscarPuntoDestino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPuntoDestinoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlParametrosUbicacionLayout = new javax.swing.GroupLayout(pnlParametrosUbicacion);
         pnlParametrosUbicacion.setLayout(pnlParametrosUbicacionLayout);
@@ -286,17 +314,17 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                 .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlParametrosUbicacionLayout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addGap(49, 49, 49)
-                        .addComponent(lblIdOrigen)
-                        .addGap(54, 54, 54)
-                        .addComponent(lblIdDestino)
+                        .addGap(47, 47, 47)
+                        .addComponent(lblIdOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblIdDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlParametrosUbicacionLayout.createSequentialGroup()
                         .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlParametrosUbicacionLayout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(31, 31, 31)
-                                .addComponent(txtDestino, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE))
+                                .addComponent(txtDestino, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlParametrosUbicacionLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addGap(35, 35, 35)
@@ -311,10 +339,11 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
             pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlParametrosUbicacionLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(lblIdOrigen)
-                    .addComponent(lblIdDestino))
+                .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblIdDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(lblIdOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31)
                 .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -325,20 +354,20 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                     .addComponent(jLabel11)
                     .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarPuntoDestino))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlDatosUbicacionLayout = new javax.swing.GroupLayout(pnlDatosUbicacion);
         pnlDatosUbicacion.setLayout(pnlDatosUbicacionLayout);
         pnlDatosUbicacionLayout.setHorizontalGroup(
             pnlDatosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlParametrosUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+            .addComponent(pnlParametrosUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
         );
         pnlDatosUbicacionLayout.setVerticalGroup(
             pnlDatosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatosUbicacionLayout.createSequentialGroup()
                 .addComponent(pnlParametrosUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(586, Short.MAX_VALUE))
+                .addContainerGap(859, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnlDatosUbicacion);
@@ -392,8 +421,49 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnQuitarLibroActionPerformed
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-        // TODO add your handling code here:
+        try {
+            BusquedaCliente.clienteSeleccionado = null;
+            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            BusquedaCliente obj = new BusquedaCliente(topFrame, true);
+            obj.setVisible(true);
+            if(BusquedaCliente.clienteSeleccionado != null){
+                lblIdCliente.setText(BusquedaCliente.clienteSeleccionado.getId());
+                txtCliente.setText(BusquedaCliente.clienteSeleccionado.getNombreCompleto());
+            }            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void btnBuscarPuntoOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPuntoOrigenActionPerformed
+        try {
+            BusquedaPunto.puntoSeleccionado = null;
+            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            BusquedaPunto obj = new BusquedaPunto(topFrame, true);
+            obj.setVisible(true);
+            if(BusquedaPunto.puntoSeleccionado != null){
+                lblIdOrigen.setText(BusquedaPunto.puntoSeleccionado.getId());
+                txtOrigen.setText(BusquedaPunto.puntoSeleccionado.getNombreUbicacion());
+            }            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnBuscarPuntoOrigenActionPerformed
+
+    private void btnBuscarPuntoDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPuntoDestinoActionPerformed
+        try {
+            BusquedaPunto.puntoSeleccionado = null;
+            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            BusquedaPunto obj = new BusquedaPunto(topFrame, true);
+            obj.setVisible(true);
+            if(BusquedaPunto.puntoSeleccionado != null){
+                lblIdDestino.setText(BusquedaPunto.puntoSeleccionado.getId());
+                txtDestino.setText(BusquedaPunto.puntoSeleccionado.getNombreUbicacion());
+            }            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnBuscarPuntoDestinoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -405,7 +475,6 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -415,6 +484,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCantidad;
+    private javax.swing.JLabel lblIdCliente;
     private javax.swing.JLabel lblIdDestino;
     private javax.swing.JLabel lblIdOrigen;
     private javax.swing.JLabel lblImpuesto;

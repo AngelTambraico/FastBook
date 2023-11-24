@@ -4,6 +4,12 @@
  */
 package fb.gui;
 
+import fb.daos.PuntoDaoFactory;
+import fb.model.Punto;
+import fb.util.Constantes;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author USUARIO
@@ -13,11 +19,36 @@ public class BusquedaPunto extends javax.swing.JDialog {
     /**
      * Creates new form BusquedaPunto
      */
+    public static Punto puntoSeleccionado;
+    public Punto[] puntosFiltrados; 
     public BusquedaPunto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
+        cargarData();
     }
+    
+    public void cargarData(){
+        puntosFiltrados = PuntoDaoFactory.getFabrica().getPuntoDao(Constantes.ACTUAL).findByName(txtFiltro.getText());            
+        
+        DefaultTableModel modelo = (DefaultTableModel) tbPuntos.getModel();
+        
+        modelo.setColumnCount(0);
+        modelo.setRowCount(0);
+        modelo.addColumn("Cod. Local");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Distrito");        
+        modelo.addColumn("Dirección");                   
 
+        for (var dt : puntosFiltrados) {
+            Object[] fila = new Object[4];
+            fila[0] = dt.getId();
+            fila[1] = dt.getNombre();
+            fila[2] = dt.getDistrito();
+            fila[3] = dt.getDireccion();
+            modelo.addRow(fila);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,9 +67,15 @@ public class BusquedaPunto extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Búsqueda de Tiendas");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Búsqueda de Locales");
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         tbPuntos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -66,15 +103,15 @@ public class BusquedaPunto extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSeleccionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txtFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,18 +123,42 @@ public class BusquedaPunto extends javax.swing.JDialog {
                     .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSeleccionar)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
-        // TODO add your handling code here:
+        try {
+            int fila = tbPuntos.getSelectedRow();
+
+            if (fila != -1) {
+                for(var item :puntosFiltrados){
+                    if(item.getId().equalsIgnoreCase(tbPuntos.getValueAt(fila, 0).toString())){
+                        puntoSeleccionado = item;
+                        break;
+                    }
+                }
+                this.hide();
+            } else {
+                JOptionPane.showMessageDialog(this, "No ha seleccionado ninguna fila");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
     }//GEN-LAST:event_btnSeleccionarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try {
+            cargarData();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        } 
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments

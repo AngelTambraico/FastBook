@@ -4,9 +4,11 @@
  */
 package fb.gui;
 
+import java.awt.Image;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -19,6 +21,19 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        resizeImage();
+    }
+    
+    public void resizeImage()
+    {
+        ImageIcon uno=new ImageIcon(this.getClass().getResource("/fb/image/fondo-fastbook.png"));      
+        Image img = uno.getImage();      
+        Image newimg = img.getScaledInstance(dpContenedor.getWidth(), dpContenedor.getHeight(), java.awt.Image.SCALE_SMOOTH);  
+        uno = new ImageIcon(newimg); 
+      
+        lblFondo.setIcon(uno);
+        lblFondo.setBounds(0,0,dpContenedor.getWidth(),dpContenedor.getHeight());
+        lblFondo.setIcon(uno);
     }
 
     /**
@@ -32,6 +47,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu3 = new javax.swing.JMenu();
         dpContenedor = new javax.swing.JDesktopPane();
+        lblFondo = new javax.swing.JLabel();
         mbMenu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -48,16 +64,27 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.setText("jMenu3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
+
+        dpContenedor.setLayer(lblFondo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout dpContenedorLayout = new javax.swing.GroupLayout(dpContenedor);
         dpContenedor.setLayout(dpContenedorLayout);
         dpContenedorLayout.setHorizontalGroup(
             dpContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(dpContenedorLayout.createSequentialGroup()
+                .addComponent(lblFondo)
+                .addGap(0, 400, Short.MAX_VALUE))
         );
         dpContenedorLayout.setVerticalGroup(
             dpContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGroup(dpContenedorLayout.createSequentialGroup()
+                .addComponent(lblFondo)
+                .addGap(0, 277, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Inicio");
@@ -220,6 +247,10 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu2ActionPerformed
 
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        resizeImage();
+    }//GEN-LAST:event_formComponentResized
+
     /**
      * @param args the command line arguments
      */
@@ -262,6 +293,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JLabel lblFondo;
     private javax.swing.JMenuBar mbMenu;
     private javax.swing.JMenuItem miAutor;
     private javax.swing.JMenuItem miCliente;

@@ -17,4 +17,6 @@ public class Constantes {
     
     public static final int CANTIDAD_MEMO = 100;
     public static final float IGV = (float) 0.18;
+    
+    public static final float COSTO_DELIVERY_POR_KM = 2;
 }

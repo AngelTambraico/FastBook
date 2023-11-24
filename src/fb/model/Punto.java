@@ -92,5 +92,9 @@ public class Punto {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+    
+    public String getNombreUbicacion(){
+        return nombre+". "+direccion+" - "+distrito;
+    }
 
 }
