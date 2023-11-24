@@ -16,7 +16,7 @@ public class PedidoDaoFactory {
         return fabrica;
     }
 
-    public EntidadService<Pedido> getAutorDao(int tipo) {
+    public EntidadService<Pedido> getPedidoDao(int tipo) {
         EntidadService<Pedido> e = null;
         switch (tipo) {
             case Constantes.MEMO:

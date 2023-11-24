@@ -151,6 +151,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu4.add(miRegistroPedido);
 
         miSeguimientoPedido.setText("Seguimiento de Pedido");
+        miSeguimientoPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSeguimientoPedidoActionPerformed(evt);
+            }
+        });
         jMenu4.add(miSeguimientoPedido);
 
         mbMenu.add(jMenu4);
@@ -250,6 +255,18 @@ public class Principal extends javax.swing.JFrame {
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         resizeImage();
     }//GEN-LAST:event_formComponentResized
+
+    private void miSeguimientoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSeguimientoPedidoActionPerformed
+        try {            
+            SeguimientoPedidos sp = new SeguimientoPedidos();
+            dpContenedor.add(sp);
+            sp.setVisible(true);
+            sp.setMaximum(false);            
+            sp.setLocation((dpContenedor.getSize().width - sp.getSize().width)/2, (dpContenedor.getSize().height - sp.getSize().height)/2);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_miSeguimientoPedidoActionPerformed
 
     /**
      * @param args the command line arguments

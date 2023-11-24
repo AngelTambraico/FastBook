@@ -22,7 +22,7 @@ public class Pedido {
         this.fechaInicioViaje = fechaInicioViaje;
         this.fechaFinViaje = fechaFinViaje;
         this.montoTotal = montoTotal; 
-        this.estado = "PENDIENTE";
+        this.estado = "ACTIVO";
     }
 
     public String getId() {

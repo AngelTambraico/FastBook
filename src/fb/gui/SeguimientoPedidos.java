@@ -4,6 +4,13 @@
  */
 package fb.gui;
 
+import fb.daos.ClienteDaoFactory;
+import fb.daos.PedidoDaoFactory;
+import fb.daos.PuntoDaoFactory;
+import fb.model.Pedido;
+import fb.util.Constantes;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author USUARIO
@@ -15,6 +22,34 @@ public class SeguimientoPedidos extends javax.swing.JInternalFrame {
      */
     public SeguimientoPedidos() {
         initComponents();
+        cargarDatos();
+    }
+    
+    public void cargarDatos() {
+        var lista = PedidoDaoFactory.getFabrica().getPedidoDao(Constantes.ACTUAL).findAll();
+        DefaultTableModel modelo = (DefaultTableModel) tbPedidos.getModel();
+
+        modelo.setColumnCount(0);
+        modelo.setRowCount(0);
+        modelo.addColumn("Código");
+        modelo.addColumn("Cliente");
+        modelo.addColumn("Desde");
+        modelo.addColumn("Hasta");
+        modelo.addColumn("Destino");        
+        modelo.addColumn("Fecha Delivery");
+        modelo.addColumn("Estado");
+
+        for (Pedido p : lista) {
+            Object[] fila = new Object[7];
+            fila[0] = p.getId();
+            fila[1] = ClienteDaoFactory.getFabrica().getClienteDao(Constantes.ACTUAL).findById(p.getIdCliente()).getNombreCompleto();
+            fila[2] = PuntoDaoFactory.getFabrica().getPuntoDao(Constantes.ACTUAL).findById(p.getIdLugarInicio()).getNombre();
+            fila[3] = PuntoDaoFactory.getFabrica().getPuntoDao(Constantes.ACTUAL).findById(p.getIdLugarDestino()).getNombre();
+            fila[4] = p.getDireccionDestino();           
+            fila[5] = p.getFechaFinViaje();
+            fila[6] = p.getEstado();
+            modelo.addRow(fila);
+        }
     }
 
     /**
@@ -26,15 +61,54 @@ public class SeguimientoPedidos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbPedidos = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        btnConfirmarEntrega = new javax.swing.JButton();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+
+        tbPedidos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tbPedidos);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel4.setText("Seguimiento de Pedidos");
+
+        btnConfirmarEntrega.setText("CONFIRMAR ENTREGA");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1086, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnConfirmarEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1014, Short.MAX_VALUE)
+                        .addComponent(jLabel4)))
+                .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 498, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jLabel4)
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
+                .addComponent(btnConfirmarEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -42,5 +116,9 @@ public class SeguimientoPedidos extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConfirmarEntrega;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbPedidos;
     // End of variables declaration//GEN-END:variables
 }
