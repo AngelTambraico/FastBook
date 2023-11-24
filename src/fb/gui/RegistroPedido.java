@@ -4,9 +4,15 @@
  */
 package fb.gui;
 
+import fb.daos.ColaboradorDaoFactory;
+import fb.daos.PedidoDaoFactory;
+import fb.daos.PuntoDaoFactory;
 import fb.dto.PedidoDetalleDTO;
 import fb.model.Libro;
+import fb.model.Pedido;
+import fb.util.Constantes;
 import fb.util.MultiHelper;
+import fb.util.Session;
 import java.awt.Image;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -29,6 +35,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     
     private static final DecimalFormat df = new DecimalFormat("0.00");
     List<PedidoDetalleDTO> detalle;
+    public double distancia;
     public RegistroPedido() {
         initComponents();        
         lblIdCliente.setVisible(false);
@@ -38,6 +45,8 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         lblIdDestino.setVisible(false);
         txtDestino.setEditable(false);
         detalle = new ArrayList<PedidoDetalleDTO>();
+        
+        distancia = 0;
         
         df.setRoundingMode(RoundingMode.HALF_UP);
         cargarDetalle();
@@ -79,9 +88,13 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         }
         subtotal = MultiHelper.round(total - impuesto,2);
         
+        double montoDelivery = distancia*Constantes.COSTO_DELIVERY_POR_KM;
+        total = total +montoDelivery;        
+        
         lblCantidad.setText(String.valueOf(cantidad));
         lblSubTotal.setText(df.format(subtotal));
-        lblImpuesto.setText(df.format(impuesto));
+        lblImpuesto.setText(df.format(impuesto));        
+        lblMontoDelivery.setText(df.format(montoDelivery));
         lblTotal.setText(df.format(total));
     }
 
@@ -113,6 +126,9 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         lblImpuesto = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        lblMontoDelivery = new javax.swing.JLabel();
+        btnComprar = new javax.swing.JButton();
         pnlDatosUbicacion = new javax.swing.JPanel();
         pnlParametrosUbicacion = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -124,6 +140,11 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         btnBuscarPuntoDestino = new javax.swing.JButton();
         lblIdOrigen = new javax.swing.JLabel();
         lblIdDestino = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtDistancia = new javax.swing.JTextField();
+        btnCalcularDelivery = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        txtFechaDelivery = new javax.swing.JTextField();
 
         setClosable(true);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -193,23 +214,40 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTotal.setText("lblTotal");
 
+        jLabel12.setText("Servicio Delivery");
+
+        lblMontoDelivery.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblMontoDelivery.setText("lblMontoDelivery");
+
+        btnComprar.setText("COMPRAR");
+        btnComprar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDatosCompraLayout = new javax.swing.GroupLayout(pnlDatosCompra);
         pnlDatosCompra.setLayout(pnlDatosCompraLayout);
         pnlDatosCompraLayout.setHorizontalGroup(
             pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDatosCompraLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosCompraLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlDatosCompraLayout.createSequentialGroup()
+                .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnComprar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDatosCompraLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(42, 42, 42)
+                        .addComponent(lblMontoDelivery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDatosCompraLayout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(84, 84, 84)
                         .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosCompraLayout.createSequentialGroup()
+                    .addGroup(pnlDatosCompraLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(60, 60, 60)
                         .addComponent(lblImpuesto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosCompraLayout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
+                    .addGroup(pnlDatosCompraLayout.createSequentialGroup()
                         .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7))
@@ -217,20 +255,20 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                         .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblSubTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosCompraLayout.createSequentialGroup()
+                    .addGroup(pnlDatosCompraLayout.createSequentialGroup()
                         .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlDatosCompraLayout.createSequentialGroup()
                                 .addComponent(txtCliente)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                             .addGroup(pnlDatosCompraLayout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
                                 .addComponent(btnAgregarLibro)
                                 .addGap(12, 12, 12)))
                         .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnQuitarLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(pnlDatosCompraLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDatosCompraLayout.createSequentialGroup()
                         .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addGroup(pnlDatosCompraLayout.createSequentialGroup()
@@ -260,7 +298,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                         .addComponent(btnQuitarLibro)
                         .addComponent(btnAgregarLibro)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -275,9 +313,15 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                     .addComponent(lblImpuesto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(lblMontoDelivery))
+                .addGap(19, 19, 19)
+                .addGroup(pnlDatosCompraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(lblTotal))
-                .addGap(70, 70, 70))
+                .addGap(18, 18, 18)
+                .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
         getContentPane().add(pnlDatosCompra);
@@ -305,6 +349,23 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setText("Distancia (Km)");
+
+        txtDistancia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDistanciaActionPerformed(evt);
+            }
+        });
+
+        btnCalcularDelivery.setText("Calcular Delivery");
+        btnCalcularDelivery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcularDeliveryActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setText("Fecha Delivery");
+
         javax.swing.GroupLayout pnlParametrosUbicacionLayout = new javax.swing.GroupLayout(pnlParametrosUbicacion);
         pnlParametrosUbicacion.setLayout(pnlParametrosUbicacionLayout);
         pnlParametrosUbicacionLayout.setHorizontalGroup(
@@ -322,18 +383,28 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                     .addGroup(pnlParametrosUbicacionLayout.createSequentialGroup()
                         .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlParametrosUbicacionLayout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(31, 31, 31)
-                                .addComponent(txtDestino, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlParametrosUbicacionLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addGap(35, 35, 35)
-                                .addComponent(txtOrigen)))
+                                .addComponent(txtOrigen))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlParametrosUbicacionLayout.createSequentialGroup()
+                                .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel2))
+                                .addGap(31, 31, 31)
+                                .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDestino, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                                    .addGroup(pnlParametrosUbicacionLayout.createSequentialGroup()
+                                        .addComponent(txtDistancia, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel13)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtFechaDelivery, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)))))
                         .addGap(18, 18, 18)
-                        .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBuscarPuntoDestino)
-                            .addComponent(btnBuscarPuntoOrigen))
-                        .addGap(75, 75, 75))))
+                        .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnCalcularDelivery, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBuscarPuntoOrigen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBuscarPuntoDestino, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(72, 72, 72))))
         );
         pnlParametrosUbicacionLayout.setVerticalGroup(
             pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -354,20 +425,28 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
                     .addComponent(jLabel11)
                     .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarPuntoDestino))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(pnlParametrosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtDistancia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCalcularDelivery)
+                        .addComponent(jLabel13)
+                        .addComponent(txtFechaDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlDatosUbicacionLayout = new javax.swing.GroupLayout(pnlDatosUbicacion);
         pnlDatosUbicacion.setLayout(pnlDatosUbicacionLayout);
         pnlDatosUbicacionLayout.setHorizontalGroup(
             pnlDatosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlParametrosUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+            .addComponent(pnlParametrosUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
         );
         pnlDatosUbicacionLayout.setVerticalGroup(
             pnlDatosUbicacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatosUbicacionLayout.createSequentialGroup()
-                .addComponent(pnlParametrosUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(859, Short.MAX_VALUE))
+                .addComponent(pnlParametrosUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 623, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnlDatosUbicacion);
@@ -465,16 +544,60 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnBuscarPuntoDestinoActionPerformed
 
+    private void txtDistanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDistanciaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDistanciaActionPerformed
+
+    private void btnCalcularDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularDeliveryActionPerformed
+        try {
+            distancia = Double.parseDouble(txtDistancia.getText());
+            cargarDetalle();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnCalcularDeliveryActionPerformed
+
+    private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
+        try{
+            Pedido p = new Pedido(
+                    Session.UsuarioActual.getIdColaborador(),
+                    lblIdCliente.getText(),
+                    lblIdOrigen.getText(),
+                    lblIdDestino.getText(),
+                    PuntoDaoFactory.getFabrica().getPuntoDao(Constantes.ACTUAL).findById(lblIdDestino.getText()).getDireccion(),
+                    "",
+                    "",
+                    txtFechaDelivery.getText(),
+                    Double.parseDouble(lblTotal.getText().replace(',', '.')));
+            if(PedidoDaoFactory.getFabrica().getPedidoDao(Constantes.ACTUAL).create(p))
+            {
+                JOptionPane.showMessageDialog(null, "Pedido creado correctamente");
+                this.dispose();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Error: verifique los campos ingresados");
+            }            
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error interno del sistema");
+        }
+    }//GEN-LAST:event_btnComprarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarLibro;
     private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnBuscarPuntoDestino;
     private javax.swing.JButton btnBuscarPuntoOrigen;
+    private javax.swing.JButton btnCalcularDelivery;
+    private javax.swing.JButton btnComprar;
     private javax.swing.JButton btnQuitarLibro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -488,6 +611,7 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblIdDestino;
     private javax.swing.JLabel lblIdOrigen;
     private javax.swing.JLabel lblImpuesto;
+    private javax.swing.JLabel lblMontoDelivery;
     private javax.swing.JLabel lblSubTotal;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JPanel pnlDatosCompra;
@@ -496,6 +620,8 @@ public class RegistroPedido extends javax.swing.JInternalFrame {
     private javax.swing.JTable tbLibros;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtDestino;
+    private javax.swing.JTextField txtDistancia;
+    private javax.swing.JTextField txtFechaDelivery;
     private javax.swing.JTextField txtOrigen;
     // End of variables declaration//GEN-END:variables
 }
