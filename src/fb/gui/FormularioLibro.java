@@ -26,7 +26,7 @@ public class FormularioLibro extends javax.swing.JDialog {
         lblEstado.setVisible(false);
         Libro l = LibroDaoFactory.getFabrica().getLibroDao(Constantes.ACTUAL).findById(codigo);
         if(l!=null){
-            txtAutor.setText(l.getIdAutor());
+            txtIDAutor.setText(l.getIdAutor());
             txtTitulo.setText(l.getTitulo());
             txtPrecio.setText(Double.toString(l.getPrecio()));
             txtStock.setText(Integer.toString(l.getStock()));
@@ -44,7 +44,7 @@ public class FormularioLibro extends javax.swing.JDialog {
     private void initComponents() {
 
         lblAutor = new javax.swing.JLabel();
-        txtAutor = new javax.swing.JTextField();
+        txtIDAutor = new javax.swing.JTextField();
         lblPrecio = new javax.swing.JLabel();
         txtPrecio = new javax.swing.JTextField();
         lblStock = new javax.swing.JLabel();
@@ -57,7 +57,7 @@ public class FormularioLibro extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        lblAutor.setText("Autor");
+        lblAutor.setText("ID Autor");
 
         lblPrecio.setText("Precio");
 
@@ -103,8 +103,8 @@ public class FormularioLibro extends javax.swing.JDialog {
                             .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAutor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(105, Short.MAX_VALUE))
+                            .addComponent(txtIDAutor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,7 +112,7 @@ public class FormularioLibro extends javax.swing.JDialog {
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAutor)
-                    .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIDAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTitulo)
@@ -143,7 +143,7 @@ public class FormularioLibro extends javax.swing.JDialog {
     private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
         try{
             Libro l = new Libro(
-                    txtAutor.getText(),
+                    txtIDAutor.getText(),
                     txtTitulo.getText(), 
                     Double.parseDouble(txtPrecio.getText()),
                     Integer.parseInt(txtStock.getText()));
@@ -233,7 +233,7 @@ public class FormularioLibro extends javax.swing.JDialog {
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblStock;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JTextField txtAutor;
+    private javax.swing.JTextField txtIDAutor;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtStock;
     private javax.swing.JTextField txtTitulo;

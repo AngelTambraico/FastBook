@@ -7,6 +7,7 @@ package fb.daos;
 import fb.model.Colaborador;
 import fb.service.EntidadService;
 import fb.util.Constantes;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,14 +140,48 @@ public class ColaboradorDaoMemory implements EntidadService<Colaborador> {
     }
 
     @Override
-    public Colaborador[] findByName(String name) {
+    public Colaborador[] findByName(String nombre) {
+        quickSort();
         List<Colaborador> result = new ArrayList<>();
+        String nombreMinusculas = normalizarTexto(nombre).toLowerCase(); // Normalizar texto
+        int left = 0;
+        int right = getCantidad() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            String nombresEnLista = normalizarTexto(lista[mid].getNombres()).toLowerCase(); // Normalizar texto
+
+            int cmp = nombresEnLista.compareTo(nombreMinusculas);
+
+            if (cmp == 0) {
+                result.add(lista[mid]);
+                // Buscar hacia atrás
+                for (int i = mid - 1; i >= 0 && normalizarTexto(lista[i].getNombres()).toLowerCase().contains(nombreMinusculas); i--) {
+                    result.add(lista[i]);
+                }
+                // Buscar hacia adelante
+                for (int i = mid + 1; i < getCantidad() && normalizarTexto(lista[i].getNombres()).toLowerCase().contains(nombreMinusculas); i++) {
+                    result.add(lista[i]);
+                }
+                return result.toArray(new Colaborador[0]);
+            } else if (cmp < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
         for (int i = 0; i < getCantidad(); i++) {
-            if (lista[i].getNombres().contains(name)) {
+            String nombreEnLista = normalizarTexto(lista[i].getNombres()).toLowerCase(); // Normalizar texto
+            if (nombreEnLista.contains(nombreMinusculas)) {
                 result.add(lista[i]);
             }
         }
         return result.toArray(new Colaborador[0]);
+    }
+    
+    private String normalizarTexto(String texto) {
+    return Normalizer.normalize(texto, Normalizer.Form.NFD)
+            .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
     @Override
@@ -156,8 +191,39 @@ public class ColaboradorDaoMemory implements EntidadService<Colaborador> {
 
     @Override
     public void quickSort() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        quickSort(0, getCantidad() - 1);
     }
-
     
+    private void quickSort(int low, int high) {
+        if (low < high) {
+            int pi = partition(low, high);
+
+            quickSort(low, pi - 1);
+            quickSort(pi + 1, high);
+        }
+    }
+    
+    private int partition(int low, int high) {
+    Colaborador pivot = lista[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (compararConNormalizacion(lista[j].getNombres(), pivot.getNombres()) < 0) {
+            i++;
+
+            Colaborador temp = lista[i];
+            lista[i] = lista[j];
+            lista[j] = temp;
+        }
+    }
+    Colaborador temp = lista[i + 1];
+    lista[i + 1] = lista[high];
+    lista[high] = temp;
+    return i + 1;
+    }
+    
+    private int compararConNormalizacion(String str1, String str2) {
+        String str1Normalized = normalizarTexto(str1);
+        String str2Normalized = normalizarTexto(str2);
+        return str1Normalized.compareTo(str2Normalized);
+    }
 }

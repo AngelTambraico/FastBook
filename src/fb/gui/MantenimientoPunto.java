@@ -266,10 +266,10 @@ public class MantenimientoPunto extends javax.swing.JInternalFrame {
         modelo.addColumn("Latitud");
         modelo.addColumn("Longitud");
         modelo.addColumn("Distrito");
-        modelo.addColumn("Dirección");
-        modelo.addColumn("Estado");
-        modelo.addColumn("Tipo");
         modelo.addColumn("Nombre");
+        modelo.addColumn("Dirección");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Estado");
         
         for (Punto p : resultados) {
             Object[] fila = new Object[8];
