@@ -12,8 +12,7 @@ public class Pedido {
     private double montoTotal;
     private String estado;
 
-    public Pedido(String id, String idColaborador, String idCliente, String idLugarInicio, String idLugarDestino, String direccionDestino, String fechaRegistro, String fechaInicioViaje, String fechaFinViaje, double montoTotal, String estado) {
-        this.id = id;
+    public Pedido(String idColaborador, String idCliente, String idLugarInicio, String idLugarDestino, String direccionDestino, String fechaRegistro, String fechaInicioViaje, String fechaFinViaje, double montoTotal) {        
         this.idColaborador = idColaborador;
         this.idCliente = idCliente;
         this.idLugarInicio = idLugarInicio;
@@ -22,8 +21,8 @@ public class Pedido {
         this.fechaRegistro = fechaRegistro;
         this.fechaInicioViaje = fechaInicioViaje;
         this.fechaFinViaje = fechaFinViaje;
-        this.montoTotal = montoTotal;
-        this.estado = estado;
+        this.montoTotal = montoTotal; 
+        this.estado = "PENDIENTE";
     }
 
     public String getId() {

@@ -67,7 +67,7 @@ public class ColaboradorDaoMemory implements EntidadService<Colaborador> {
         create(t3);
         create(t4);
         create(t5);
-        
+
         // </editor-fold>
     }
 
@@ -178,10 +178,10 @@ public class ColaboradorDaoMemory implements EntidadService<Colaborador> {
         }
         return result.toArray(new Colaborador[0]);
     }
-    
+
     private String normalizarTexto(String texto) {
-    return Normalizer.normalize(texto, Normalizer.Form.NFD)
-            .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        return Normalizer.normalize(texto, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
     @Override
@@ -193,7 +193,7 @@ public class ColaboradorDaoMemory implements EntidadService<Colaborador> {
     public void quickSort() {
         quickSort(0, getCantidad() - 1);
     }
-    
+
     private void quickSort(int low, int high) {
         if (low < high) {
             int pi = partition(low, high);
@@ -202,25 +202,25 @@ public class ColaboradorDaoMemory implements EntidadService<Colaborador> {
             quickSort(pi + 1, high);
         }
     }
-    
-    private int partition(int low, int high) {
-    Colaborador pivot = lista[high];
-    int i = low - 1;
-    for (int j = low; j < high; j++) {
-        if (compararConNormalizacion(lista[j].getNombres(), pivot.getNombres()) < 0) {
-            i++;
 
-            Colaborador temp = lista[i];
-            lista[i] = lista[j];
-            lista[j] = temp;
+    private int partition(int low, int high) {
+        Colaborador pivot = lista[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (compararConNormalizacion(lista[j].getNombreCompleto(), pivot.getNombreCompleto()) < 0) {
+                i++;
+
+                Colaborador temp = lista[i];
+                lista[i] = lista[j];
+                lista[j] = temp;
+            }
         }
+        Colaborador temp = lista[i + 1];
+        lista[i + 1] = lista[high];
+        lista[high] = temp;
+        return i + 1;
     }
-    Colaborador temp = lista[i + 1];
-    lista[i + 1] = lista[high];
-    lista[high] = temp;
-    return i + 1;
-    }
-    
+
     private int compararConNormalizacion(String str1, String str2) {
         String str1Normalized = normalizarTexto(str1);
         String str2Normalized = normalizarTexto(str2);

@@ -4,23 +4,25 @@
  */
 package fb.daos;
 
-
 import fb.model.Libro;
 import fb.service.EntidadService;
 import fb.util.Constantes;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author USUARIO
  */
-public class LibroDaoMemory implements EntidadService<Libro>{
+public class LibroDaoMemory implements EntidadService<Libro> {
+
     private Libro[] lista;
     private int indice;
 
@@ -30,36 +32,33 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         lista = new Libro[Constantes.CANTIDAD_MEMO];
         indice = -1;
 
-         cargarDatosDesdeCSV("Datos-Libros.csv");
+        cargarDatosDesdeCSV("Libros.csv");
     }
+
     private void cargarDatosDesdeCSV(String ruta) {
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(ruta), StandardCharsets.UTF_8))) {
-        String linea;
-        reader.readLine();
-        while ((linea = reader.readLine()) != null) {
-            String[] campos = linea.split(",");
-            if (campos.length == 5) { 
-                double precio = Double.parseDouble(campos[3].trim());
-                int stock = Integer.parseInt(campos[4].trim());
+        try (BufferedReader reader = new BufferedReader(new FileReader(ruta))) {
+            String linea;
+            reader.readLine();
+            while ((linea = reader.readLine()) != null) {
+                String[] campos = linea.split(";");
+                if (campos.length == 5) {
 
-                Libro libro = new Libro(
-                        campos[0].trim(),
-                        campos[1].trim(),
-                        campos[2].trim(),
-                        precio,
-                        stock
-                );
-                createFromFile(libro);
-            } else {
-                System.err.println("Formato de línea incorrecto en el archivo CSV.");
+                    Libro libro = new Libro(
+                            campos[0].trim(),
+                            campos[1].trim(),
+                            campos[2].trim(),
+                            Double.parseDouble(campos[3].trim()),
+                            Integer.parseInt(campos[4].trim())
+                    );
+                    createFromFile(libro);
+                } else {
+                    System.err.println("Formato de línea incorrecto en el archivo CSV.");
+                }
             }
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
         }
-    } catch (IOException | NumberFormatException e) {
-        e.printStackTrace();
     }
-}
-
-    
 
     public static LibroDaoMemory getInstancia() {
         if (instancia == null) {
@@ -106,7 +105,8 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         }
         return result;
     }
-        public boolean createFromFile(Libro libro) {
+
+    public boolean createFromFile(Libro libro) {
         boolean result = false;
         String id;
         if (libro instanceof Libro) {
@@ -116,6 +116,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
         }
         return result;
     }
+
     @Override
     public Libro findById(String id) {
         Libro result = null;
@@ -178,22 +179,22 @@ public class LibroDaoMemory implements EntidadService<Libro>{
 
         return result.toArray(new Libro[0]);
     }
-    
+
     private String normalizarTexto(String texto) {
-    return Normalizer.normalize(texto, Normalizer.Form.NFD)
-            .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        return Normalizer.normalize(texto, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
     @Override
     public int getCantidad() {
         return indice + 1;
     }
-  
+
     @Override
     public void quickSort() {
         quickSort(0, getCantidad() - 1);
     }
-  
+
     private void quickSort(int low, int high) {
         if (low < high) {
             int pi = partition(low, high);
@@ -202,7 +203,7 @@ public class LibroDaoMemory implements EntidadService<Libro>{
             quickSort(pi + 1, high);
         }
     }
-  
+
     private int partition(int low, int high) {
         Libro pivot = lista[high];
         int i = low - 1;
@@ -223,11 +224,11 @@ public class LibroDaoMemory implements EntidadService<Libro>{
 
         return i + 1;
     }
-    
+
     private int compararConNormalizacion(String str1, String str2) {
         String str1Normalized = normalizarTexto(str1);
         String str2Normalized = normalizarTexto(str2);
         return str1Normalized.compareTo(str2Normalized);
     }
-    
+
 }

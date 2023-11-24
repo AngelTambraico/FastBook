@@ -74,5 +74,8 @@ public class Cliente {
         this.estado = estado;
     }
     
+    public String getNombreCompleto(){
+        return this.nombre+" "+this.apellidoPaterno+" "+this.apellidoMaterno;
+    }
 
 }

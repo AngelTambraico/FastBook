@@ -12,16 +12,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author USUARIO
  */
-public class PuntoDaoMemory implements EntidadService<Punto>{
+public class PuntoDaoMemory implements EntidadService<Punto> {
+
     private Punto[] lista;
     private int indice;
 
     private static PuntoDaoMemory instancia;
-    
+
     private PuntoDaoMemory() {
         lista = new Punto[Constantes.CANTIDAD_MEMO];
         indice = -1;
@@ -57,7 +59,7 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
     }
 
     static EntidadService<Punto> getInstancia() {
-         if (instancia == null) {
+        if (instancia == null) {
             instancia = new PuntoDaoMemory();
         }
         return instancia;
@@ -102,16 +104,18 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
         }
         return result;
     }
+
     public boolean createFromFile(Punto punto) {
         boolean result = false;
         String id;
         if (punto instanceof Punto) {
-            indice++;            
+            indice++;
             lista[indice] = punto;
             result = true;
         }
         return result;
     }
+
     @Override
     public Punto findById(String id) {
         Punto result = null;
@@ -132,11 +136,12 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
         }
         return result.toArray(new Punto[0]);
     }
-  
+
     @Override
     public void quickSort() {
         quickSort(0, getCantidad() - 1);
     }
+
     private void quickSort(int low, int high) {
         if (low < high) {
             int pi = partition(low, high);
@@ -166,45 +171,46 @@ public class PuntoDaoMemory implements EntidadService<Punto>{
 
         return i + 1;
     }
+
     @Override
     public Punto[] findByName(String direccion) {
-    quickSort();
-    List<Punto> result = new ArrayList<>();
-    String direccionMinusculas = direccion.toLowerCase(); 
-    int left = 0;
-    int right = getCantidad() - 1;
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        String direccionEnLista = lista[mid].getDireccion().toLowerCase(); 
+        quickSort();
+        List<Punto> result = new ArrayList<>();
+        String direccionMinusculas = direccion.toLowerCase();
+        int left = 0;
+        int right = getCantidad() - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            String direccionEnLista = lista[mid].getNombreUbicacion().toLowerCase();
 
-        int cmp = direccionEnLista.compareTo(direccionMinusculas);
+            int cmp = direccionEnLista.compareTo(direccionMinusculas);
 
-        if (cmp == 0) {
-            result.add(lista[mid]);
-            // Buscar hacia atrás
-            for (int i = mid - 1; i >= 0 && lista[i].getDireccion().toLowerCase().contains(direccionMinusculas); i--) {
+            if (cmp == 0) {
+                result.add(lista[mid]);
+                // Buscar hacia atrás
+                for (int i = mid - 1; i >= 0 && lista[i].getNombreUbicacion().toLowerCase().contains(direccionMinusculas); i--) {
+                    result.add(lista[i]);
+                }
+                // Buscar hacia adelante
+                for (int i = mid + 1; i < getCantidad() && lista[i].getNombreUbicacion().toLowerCase().contains(direccionMinusculas); i++) {
+                    result.add(lista[i]);
+                }
+                return result.toArray(new Punto[0]);
+            } else if (cmp < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        for (int i = 0; i < getCantidad(); i++) {
+            String direccionEnLista = lista[i].getNombreUbicacion().toLowerCase();
+            if (direccionEnLista.contains(direccionMinusculas)) {
                 result.add(lista[i]);
             }
-            // Buscar hacia adelante
-            for (int i = mid + 1; i < getCantidad() && lista[i].getDireccion().toLowerCase().contains(direccionMinusculas); i++) {
-                result.add(lista[i]);
-            }
-            return result.toArray(new Punto[0]);
-        } else if (cmp < 0) {
-            left = mid + 1;
-        } else {
-            right = mid - 1;
         }
-    }
-    for (int i = 0; i < getCantidad(); i++) {
-        String direccionEnLista = lista[i].getDireccion().toLowerCase();
-        if (direccionEnLista.contains(direccionMinusculas)) {
-            result.add(lista[i]);
-        }
-    }
 
-    return result.toArray(new Punto[0]);
-}
+        return result.toArray(new Punto[0]);
+    }
 
     @Override
     public int getCantidad() {

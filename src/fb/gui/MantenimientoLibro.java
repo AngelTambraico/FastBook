@@ -4,6 +4,7 @@
  */
 package fb.gui;
 
+import fb.daos.AutorDaoFactory;
 import fb.daos.LibroDaoFactory;
 import fb.model.Libro;
 import fb.util.Constantes;
@@ -26,7 +27,7 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
         modelo.setColumnCount(0);
         modelo.setRowCount(0);
         modelo.addColumn("Codigo");
-        modelo.addColumn("Codigo de Autor");
+        modelo.addColumn("Autor");
         modelo.addColumn("Titulo");
         modelo.addColumn("Precio");
         modelo.addColumn("Stock");
@@ -35,7 +36,7 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
         for (Libro l : lista) {
             Object[] fila = new Object[6];
             fila[0] = l.getId();
-            fila[1] = l.getIdAutor();
+            fila[1] = AutorDaoFactory.getFabrica().getAutorDao(Constantes.ACTUAL).findById(l.getIdAutor()).getNombreCompleto();
             fila[2] = l.getTitulo();
             fila[3] = l.getPrecio();
             fila[4] = l.getStock();
@@ -161,8 +162,8 @@ public class MantenimientoLibro extends javax.swing.JInternalFrame {
                     .addComponent(btnOrdenar)
                     .addComponent(lblTitulo))
                 .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)

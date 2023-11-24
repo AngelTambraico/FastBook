@@ -153,9 +153,11 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
         }
         return result.toArray(new Cliente[0]);
     }
+
     public void quickSort() {
         quickSort(0, getCantidad() - 1);
     }
+
     private void quickSort(int low, int high) {
         if (low < high) {
             int pi = partition(low, high);
@@ -170,7 +172,7 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
-            if (lista[j].getNombre().compareTo(pivot.getNombre()) < 0) {
+            if (lista[j].getNombreCompleto().compareTo(pivot.getNombreCompleto()) < 0) {
                 i++;
 
                 Cliente temp = lista[i];
@@ -185,50 +187,50 @@ public class ClienteDaoMemory implements EntidadService<Cliente> {
 
         return i + 1;
     }
+
     @Override
     public Cliente[] findByName(String nombre) {
-    quickSort();
-    List<Cliente> result = new ArrayList<>();
-    String nombreMinusculas = nombre.toLowerCase(); 
-    int left = 0;
-    int right = getCantidad() - 1;
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-        String nombreEnLista = lista[mid].getNombre().toLowerCase(); 
+        quickSort();
+        List<Cliente> result = new ArrayList<>();
+        String nombreMinusculas = nombre.toLowerCase();
+        int left = 0;
+        int right = getCantidad() - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            String nombreEnLista = lista[mid].getNombreCompleto().toLowerCase();
 
-        int cmp = nombreEnLista.compareTo(nombreMinusculas);
+            int cmp = nombreEnLista.compareTo(nombreMinusculas);
 
-        if (cmp == 0) {
-            result.add(lista[mid]);
-            // Buscar hacia atrás
-            for (int i = mid - 1; i >= 0 && lista[i].getNombre().toLowerCase().contains(nombreMinusculas); i--) {
+            if (cmp == 0) {
+                result.add(lista[mid]);
+                // Buscar hacia atrás
+                for (int i = mid - 1; i >= 0 && lista[i].getNombreCompleto().toLowerCase().contains(nombreMinusculas); i--) {
+                    result.add(lista[i]);
+                }
+                // Buscar hacia adelante
+                for (int i = mid + 1; i < getCantidad() && lista[i].getNombreCompleto().toLowerCase().contains(nombreMinusculas); i++) {
+                    result.add(lista[i]);
+                }
+                return result.toArray(new Cliente[0]);
+            } else if (cmp < 0) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        for (int i = 0; i < getCantidad(); i++) {
+            String nombreEnLista = lista[i].getNombreCompleto().toLowerCase();
+            if (nombreEnLista.contains(nombreMinusculas)) {
                 result.add(lista[i]);
             }
-            // Buscar hacia adelante
-            for (int i = mid + 1; i < getCantidad() && lista[i].getNombre().toLowerCase().contains(nombreMinusculas); i++) {
-                result.add(lista[i]);
-            }
-            return result.toArray(new Cliente[0]);
-        } else if (cmp < 0) {
-            left = mid + 1;
-        } else {
-            right = mid - 1;
         }
-    }
-    for (int i = 0; i < getCantidad(); i++) {
-        String nombreEnLista = lista[i].getNombre().toLowerCase();
-        if (nombreEnLista.contains(nombreMinusculas)) {
-            result.add(lista[i]);
-        }
-    }
 
-    return result.toArray(new Cliente[0]);
-}
+        return result.toArray(new Cliente[0]);
+    }
 
     @Override
     public int getCantidad() {
         return indice + 1;
-    }  
+    }
 
-    
 }
